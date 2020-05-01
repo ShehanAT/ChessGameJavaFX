@@ -10,15 +10,26 @@ import board.ChessBoard;
 
 public class CustomControl extends Control {
 	private ChessBoard chessBoard;
+	private StatusBar statusBar;
+	private int statusBarSize; 
 	
 	public CustomControl() {
 		setSkin(new ControlSkin(this));
-		
-		chessBoard = new ChessBoard();
-		//getChildren().add() adds children elements(chessBoard, Tiles, Pieces) to mainLayout stackpane
+		statusBar = new StatusBar();
+		statusBarSize = 150; // this is the height of the statusBar
+		chessBoard = new ChessBoard(statusBar);
+		//getChildren().add() adds children elements(chessBoard, Tiles, Pieces, statusBar) to mainLayout stackpane
 		getChildren().add(chessBoard);
+		getChildren().add(statusBar);	
 		
-		
+	}
+	
+	public void resize(double width, double height) {
+		super.resize(width, height - statusBarSize); // resize the application to fit the chess board and the status bar
+		chessBoard.setTranslateY(statusBarSize / 2); // setTranslate makes dynamic adjustments to chessBoard's initial position
+		chessBoard.resize(width, height - statusBarSize);
+		statusBar.resize(width, statusBarSize);
+		statusBar.setTranslateY(-(statusBarSize / 2));
 		
 	}
 }

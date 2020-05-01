@@ -55,7 +55,25 @@ public class StatusBar extends HBox{
 		statusBarGridPane.setHgap(30);
 		statusBarGridPane.setPadding(new Insets(10, 10, 10, 10));
 		
+		for(Node n: statusBarGridPane.getChildren()) {
+			GridPane.setHalignment(n, HPos.CENTER);
+			GridPane.setValignment(n, VPos.CENTER);
+			if(n instanceof Label) {
+				n.setStyle("-fx-font-size: 12pt; -fx-font-weight: bold; -fx-opacity: 1.0;");
+			}
+		}
 		
+		statusBarGridPane.getStylesheets().addAll(this.getClass().getResource("statusBar.css").toExternalForm());
+		statusBarGridPane.setId("statusBar");
+		statusBarGridPane.setSnapToPixel(false);
+		getChildren().add(statusBarGridPane);
+		
+	}
+	
+	public void resize(double width, double height) {
+		super.resize(width, height);
+		setWidth(width);
+		setHeight(height);
 		
 	}
 	

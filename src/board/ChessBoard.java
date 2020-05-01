@@ -1,6 +1,7 @@
 package board;
 
 import java.util.ArrayList;
+import application.StatusBar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -28,12 +29,15 @@ public class ChessBoard extends Pane{
 	private boolean blackTile;
 	private Rectangle background;
 	private Piece selectedPiece;
+	private StatusBar statusBar; 
 	
 	private boolean check = false;
 	private boolean checkMate = false;
 	private boolean stalement = false;
 	
-	public ChessBoard() {
+	public ChessBoard(StatusBar newStatusBar) {
+		
+		statusBar = newStatusBar; // set statusbar passed in from custom control constructor
 		board = new int[boardHeight][boardWidth];
 		tiles = new Tile[boardHeight][boardWidth];
 		pieces = new Piece[boardHeight][boardWidth];
@@ -85,6 +89,10 @@ public class ChessBoard extends Pane{
 	
 	public void setPiece(int x, int y, Piece piece) {
 		this.pieces[x][y] = piece;
+	}
+	
+	public StatusBar getStatusBar() {
+		return statusBar;
 	}
  
 }
