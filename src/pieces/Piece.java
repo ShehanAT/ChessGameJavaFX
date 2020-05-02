@@ -41,7 +41,7 @@ public abstract class Piece extends Group{
 	
 	
 	public ImageView getImage() {
-		return (imageView);
+		return imageView;
 		
 	}
 	

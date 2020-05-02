@@ -13,7 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import pieces.Piece;
-
+import pieces.*;
 public class ChessBoard extends Pane{
 	private double cell_width;
 	private double cell_height;
@@ -30,6 +30,43 @@ public class ChessBoard extends Pane{
 	private Rectangle background;
 	private Piece selectedPiece;
 	private StatusBar statusBar; 
+	
+	//declare pieces 
+	private Pawn whitePawn_1;
+	private Pawn whitePawn_2;
+	private Pawn whitePawn_3;
+	private Pawn whitePawn_4;
+	private Pawn whitePawn_5;
+	private Pawn whitePawn_6;
+	private Pawn whitePawn_7;
+	private Pawn whitePawn_8;
+	private Queen whiteQueen_1;
+	private King whiteKing_1;
+	private Knight whiteKnight_1;
+	private Knight whiteKnight_2;
+	private Bishop whiteBishop_1;
+	private Bishop whiteBishop_2;
+	private Rook whiteRook_1;
+	private Rook whiteRook_2;
+	
+	private Pawn blackPawn_1;
+	private Pawn blackPawn_2;
+	private Pawn blackPawn_3;
+	private Pawn blackPawn_4;
+	private Pawn blackPawn_5;
+	private Pawn blackPawn_6;
+	private Pawn blackPawn_7;
+	private Pawn blackPawn_8;
+	private Queen blackQueen_1;
+	private King blackKing_1;
+	private Knight blackKnight_1;
+	private Knight blackKnight_2;
+	private Bishop blackBishop_1;
+	private Bishop blackBishop_2;
+	private Rook blackRook_1;
+	private Rook blackRook_2;
+	
+	
 	
 	public boolean check = false;
 	private boolean checkMate = false;
@@ -55,7 +92,6 @@ public class ChessBoard extends Pane{
 				blackTile = false;
 			for(int j = 0 ; j < 8 ; j++) {
 				board[i][j] = empty_tile;
-				pieces[i][i] = null;
 				if(blackTile) {
 					tiles[i][j] = new Tile(0); //set tile to black color
 					blackTile = false;
@@ -64,18 +100,121 @@ public class ChessBoard extends Pane{
 					blackTile = true;
 				}
 				getChildren().add(tiles[i][j]);
+				pieces[i][j] = null;
 			}
 			
 		}
-		for(int i = 0 ; i < getChildren().size(); i++) {
-			System.out.println(getChildren().get(i));
-		}
+		
+		initPiece();
 		current_player = white_player;
 		
 	}
 	
 	public void initPiece() {
+		// initialize white pieces
+		whiteRook_1 = new Rook(1, 0, 7);
+		whiteKnight_1 = new Knight(1, 1, 7);
+		whiteBishop_1 = new Bishop(1, 2, 7);
+		whiteQueen_1 = new Queen(1, 3, 7);
+		whiteKing_1 = new King(1, 4, 7);
+		whiteBishop_2 = new Bishop(1, 5, 7);
+		whiteKnight_2 = new Knight(1, 6, 7);
+		whiteRook_2 = new Rook(1, 7, 7);
+		whitePawn_1 = new Pawn(1, 0, 6);
+		whitePawn_2 = new Pawn(1, 1, 6);
+		whitePawn_3 = new Pawn(1, 2, 6);
+		whitePawn_4 = new Pawn(1, 3, 6);
+		whitePawn_5 = new Pawn(1, 4, 6);
+		whitePawn_6 = new Pawn(1, 5, 6);
+		whitePawn_7 = new Pawn(1, 6, 6);
+		whitePawn_8 = new Pawn(1, 7, 6);
 		
+		//initialize black pieces
+		blackRook_1 = new Rook(2, 0, 0);
+		blackKnight_1 = new Knight(2, 1, 0);
+		blackBishop_1 = new Bishop(2, 2, 0);
+		blackKing_1 = new King(2, 3, 0);
+		blackQueen_1 = new Queen(2, 4, 0);
+		blackBishop_2 = new Bishop(2, 5, 0);
+		blackKnight_2 = new Knight(2, 6, 0);
+		blackRook_2 = new Rook(2, 7, 0);
+		blackPawn_1 = new Pawn(2, 0, 1);
+		blackPawn_2 = new Pawn(2, 1, 1);
+		blackPawn_3 = new Pawn(2, 2, 1);
+		blackPawn_4 = new Pawn(2, 3, 1);
+		blackPawn_5 = new Pawn(2, 4, 1);
+		blackPawn_6 = new Pawn(2, 5, 1);
+		blackPawn_7 = new Pawn(2, 6, 1);
+		blackPawn_8 = new Pawn(2, 7, 1);
+		
+		pieces[0][0] = whiteRook_1;
+		pieces[1][0] = whiteKnight_1;
+		pieces[2][0] = whiteBishop_1;
+		pieces[3][0] = whiteQueen_1;
+		pieces[4][0] = whiteKing_1;
+		pieces[5][0] = whiteBishop_2;
+		pieces[6][0] = whiteKnight_2;
+		pieces[7][0] = whiteRook_2;
+		pieces[0][1] = whitePawn_1;
+		pieces[1][1] = whitePawn_2;
+		pieces[2][1] = whitePawn_3;
+		pieces[3][1] = whitePawn_4;
+		pieces[4][1] = whitePawn_5;
+		pieces[5][1] = whitePawn_6;
+		pieces[6][1] = whitePawn_7;
+		pieces[7][1] = whitePawn_8;
+		
+	
+		
+		for(int i = 0 ; i < boardWidth; i++) {
+			for(int j = 2 ; j < 6; j++) { // setting the squares between the white and black sides to null
+				pieces[i][j] = null; 
+			}
+		}
+//		for(int i = 2; i < 6; i++) {
+//			for(int j = 0 ; j < boardWidth; j++) {
+//				pieces[j][i] = null;
+//			}
+//		}
+		
+		pieces[0][7] = blackRook_1;
+		pieces[1][7] = blackKnight_1;
+		pieces[2][7] = blackBishop_1;
+		pieces[3][7] = blackQueen_1;
+		pieces[4][7] = blackKing_1;
+		pieces[5][7] = blackBishop_2;
+		pieces[6][7] = blackKnight_2;
+		pieces[7][7] = blackRook_2;
+		pieces[0][6] = blackPawn_1;
+		pieces[1][6] = blackPawn_2;
+		pieces[2][6] = blackPawn_3;
+		pieces[3][6] = blackPawn_4;
+		pieces[4][6] = blackPawn_5;
+		pieces[5][6] = blackPawn_6;
+		pieces[6][6] = blackPawn_7;
+		pieces[7][6] = blackPawn_8;
+		
+	
+		
+		for(int i = 0 ; i < boardWidth; i++) { // columns
+			for(int j = 0; j < boardHeight; j++) { // rows
+				if(i == 0 || i == 1) {
+					board[i][j] = 2; //indicate this is a white piece
+				}
+				else if(i == 6 || i == 7) {
+					board[i][j] = 1; //indicate this is a black piece
+				}
+				else {
+					board[i][j] = 0; //indicate this is a unoccupied piece
+				}
+			}
+		}
+		
+		for(int i = 0 ; i < 8; i++) {
+			getChildren().addAll(pieces[i][0].getImage(), pieces[i][1].getImage(), pieces[i][6].getImage(), pieces[i][7].getImage());
+		}
+		
+				
 	}
 	
 	@Override 
@@ -91,11 +230,13 @@ public class ChessBoard extends Pane{
 		
 		//update the piece positions on the chess board
 		for(int i = 0; i < 8; i++) {
-			for(int j = 0; j < 8; j++) {
-				
-				
-				tiles[i][j].resize(cell_width, cell_height);
+			for(int j = 0; j < 8; j++){
+				if(board[i][j] != 0) {//if tile is not supposed to be empty add appropriate piece
+					pieces[j][i].relocate(i * cell_width, j * cell_height);
+					pieces[j][i].resize(cell_width, cell_height);
+				}
 				tiles[i][j].relocate(i * cell_width, j * cell_height);
+				tiles[i][j].resize(cell_width, cell_height);	
 			}
 		}
 	}

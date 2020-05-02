@@ -10,10 +10,10 @@ public class Rook extends Piece{
 		super(type, x, y); //passing the piece color and coordinates to Piece super class
 		name = "Rook";
 		if(type == 1) { // if type = 1, this is a white rook
-			image = new Image("../resources/White_Rook.png");
+			image = new Image("file:src/resources/White_Rook.png");
 		}
 		else if(type == 2) { // if type = 2, this is a black rook 
-			image = new Image("../resource/Black_Root.png");
+			image = new Image("file:src/resources/Black_Rook.png");
 		}
 		imageView.setImage(image); // imageView inherited from Piece
 		imageView.fitWidthProperty();

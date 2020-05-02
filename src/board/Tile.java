@@ -15,7 +15,7 @@ public class Tile extends Group{
 		tile = new Rectangle();
 		tile.getTransforms().add(pos);
 		if(i == 0) {
-			tile.setFill(Color.BLACK);
+			tile.setFill(Color.DIMGREY);
 		}
 		else if(i == 1) {
 			tile.setFill(Color.WHITE);
