@@ -4,13 +4,13 @@ import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.transform.Translate;
-
+import board.ChessBoard;
 public abstract class Piece extends Group{
 	private int type; // black or white piece 
-	private int xPos; // x coordinate of piece 
-	private int yPos; // y coordinate of piece
-	private String name; //name of piece
-	protected ImageView imageView = new ImageView();
+	protected int xPos; // x coordinate of piece 
+	protected int yPos; // y coordinate of piece
+	protected String name; //name of piece
+	protected ImageView imageView = new ImageView(); //image of the piece 
 	protected Translate pos;
 	
 	protected boolean firstTimeMove; //to check if the piece has been used before 
@@ -22,6 +22,23 @@ public abstract class Piece extends Group{
 		this.yPos = yPos;
 		this.firstTimeMove = firstTimeMove;
 	}
+	
+	public void resize(double width, double height) {
+		imageView.setFitWidth(width);
+		imageView.setFitHeight(height);
+	}
+	
+	public void relocate(double x, double y) {
+		imageView.setTranslateX(x);
+		imageView.setTranslateY(y);
+		
+	}
+	
+	//abstract method for all piece types
+	public void SelectPiece(ChessBoard chessBoard) {
+		
+	}
+	
 	
 	public ImageView getImage() {
 		return (imageView);

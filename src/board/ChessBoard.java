@@ -31,9 +31,9 @@ public class ChessBoard extends Pane{
 	private Piece selectedPiece;
 	private StatusBar statusBar; 
 	
-	private boolean check = false;
+	public boolean check = false;
 	private boolean checkMate = false;
-	private boolean stalement = false;
+	public boolean stalement = false;
 	
 	public ChessBoard(StatusBar newStatusBar) {
 		
@@ -43,7 +43,9 @@ public class ChessBoard extends Pane{
 		pieces = new Piece[boardHeight][boardWidth];
 		
 		background = new Rectangle();
-		background.setFill(Color.GHOSTWHITE);
+		background.setFill(Color.WHITE);
+		
+		getChildren().add(background);
 		
 		for(int i = 0 ; i < 8 ; i++) {
 			if(i%2 == 0 || i == 0) 
@@ -61,7 +63,12 @@ public class ChessBoard extends Pane{
 					tiles[i][j] = new Tile(1); //set tile to white color
 					blackTile = true;
 				}
+				getChildren().add(tiles[i][j]);
 			}
+			
+		}
+		for(int i = 0 ; i < getChildren().size(); i++) {
+			System.out.println(getChildren().get(i));
 		}
 		current_player = white_player;
 		
@@ -69,6 +76,48 @@ public class ChessBoard extends Pane{
 	
 	public void initPiece() {
 		
+	}
+	
+	@Override 
+	public void resize(double width, double height) {
+		//calling super class's resize method 
+		super.resize(width, height);
+		
+		background.setWidth(width);
+		background.setHeight(height);
+		
+		cell_width = width / 8.0; //calculating the width of each tile on the chess board 
+		cell_height = height / 8.0; //calculating the height of each tile on the chess board 
+		
+		//update the piece positions on the chess board
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < 8; j++) {
+				
+				
+				tiles[i][j].resize(cell_width, cell_height);
+				tiles[i][j].relocate(i * cell_width, j * cell_height);
+			}
+		}
+	}
+	
+	
+	public void colorSquare(int x, int y, boolean selectedPiece) {
+		// This function highlights the current position of the selected piece in green and available move positions in yellow
+		if(selectedPiece) {
+			tiles[x][y].highlightWindow(Color.YELLOW);
+		}else {
+			tiles[x][y].highlightWindow(Color.GREEN);
+		}
+	}
+	
+	public void unHighlight() {
+		for(int i = 0 ; i < boardWidth ; i++) {
+			for(int j = 0; j < boardHeight ; j++) {
+				if(tiles[i][j].getTile().getStroke() != null) { // if tile does not have default stroke value of null(meaning it is highlighted), unhighlight it 
+					tiles[i][j].unHighlight();
+				}
+			}
+		}
 	}
 	
 	public int getBoardHeight() {
@@ -89,6 +138,10 @@ public class ChessBoard extends Pane{
 	
 	public void setPiece(int x, int y, Piece piece) {
 		this.pieces[x][y] = piece;
+	}
+	
+	public Piece getPiece(int x, int y) {
+		return pieces[x][y];
 	}
 	
 	public StatusBar getStatusBar() {

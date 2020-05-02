@@ -32,6 +32,7 @@ public class Main extends Application {
 		mainLayout = new StackPane();
 		customControl = new CustomControl();
 		mainLayout.getChildren().add(customControl);
+	
 		
 	}
 	

@@ -1,6 +1,7 @@
 package application;
 
 import javafx.event.Event;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Control;
 import javafx.scene.input.KeyCode;
@@ -19,8 +20,12 @@ public class CustomControl extends Control {
 		statusBarSize = 150; // this is the height of the statusBar
 		chessBoard = new ChessBoard(statusBar);
 		//getChildren().add() adds children elements(chessBoard, Tiles, Pieces, statusBar) to mainLayout stackpane
+//		getChildren().addAll(statusBar, chessBoard);
+		getChildren().add(statusBar);
 		getChildren().add(chessBoard);
-		getChildren().add(statusBar);	
+		for(int i = 0; i < getChildren().size() ; i++) {
+			System.out.println(getChildren().get(i));
+		}
 		
 	}
 	

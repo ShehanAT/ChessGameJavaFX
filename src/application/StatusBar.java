@@ -48,8 +48,8 @@ public class StatusBar extends HBox{
 		row = new RowConstraints();
 		row.setPercentHeight(45);
 		statusBarGridPane.getRowConstraints().add(row);
-		statusBarGridPane.addRow(0, resetButton, whitePlayerAlert, blackPlayerAlert);
-		statusBarGridPane.addRow(1, winner, whitePlayerTimer, blackPlayerTimer);
+		statusBarGridPane.addRow(0, whitePlayerAlert, resetButton, blackPlayerAlert);
+		statusBarGridPane.addRow(1, whitePlayerTimer, winner, blackPlayerTimer);
 		
 		statusBarGridPane.setVgap(30);
 		statusBarGridPane.setHgap(30);
@@ -59,7 +59,7 @@ public class StatusBar extends HBox{
 			GridPane.setHalignment(n, HPos.CENTER);
 			GridPane.setValignment(n, VPos.CENTER);
 			if(n instanceof Label) {
-				n.setStyle("-fx-font-size: 12pt; -fx-font-weight: bold; -fx-opacity: 1.0;");
+				n.setStyle("-fx-font-size: 10pt; -fx-font-weight: bold; -fx-opacity: 1.0;");
 			}
 		}
 		
