@@ -31,7 +31,32 @@ public abstract class Piece extends Group{
 	public void relocate(double x, double y) {
 		imageView.setTranslateX(x);
 		imageView.setTranslateY(y);
-		
+		centerImage();
+	}
+	
+	public void centerImage() {
+		Image img = imageView.getImage();
+		if(img != null) {
+			double w = 0;
+			double h = 0;
+			
+			double ratioX = imageView.getFitWidth() / img.getWidth();
+			double ratioY = imageView.getFitHeight() / img.getHeight();
+			
+			double reduceCoeff = 0;
+			if(ratioX <= ratioY) {
+				reduceCoeff = ratioY;
+			}else {
+				reduceCoeff = ratioX;
+			}
+			
+			w = img.getWidth() * reduceCoeff;
+			h = img.getHeight() * reduceCoeff;
+			
+			imageView.setX((imageView.getFitWidth() - w) / 2);
+			imageView.setY((imageView.getFitHeight() - h) / 2);
+			
+		}	
 	}
 	
 	//abstract method for all piece types

@@ -17,16 +17,9 @@ public class CustomControl extends Control {
 	public CustomControl() {
 		setSkin(new ControlSkin(this));
 		statusBar = new StatusBar();
-		statusBarSize = 150; // this is the height of the statusBar
+		statusBarSize = 80; // this is the height of the statusBar
 		chessBoard = new ChessBoard(statusBar);
-		//getChildren().add() adds children elements(chessBoard, Tiles, Pieces, statusBar) to mainLayout stackpane
-//		getChildren().addAll(statusBar, chessBoard);
-		getChildren().add(statusBar);
-		getChildren().add(chessBoard);
-		for(int i = 0; i < getChildren().size() ; i++) {
-			System.out.println(getChildren().get(i));
-		}
-		
+		getChildren().addAll(statusBar, chessBoard);
 	}
 	
 	public void resize(double width, double height) {

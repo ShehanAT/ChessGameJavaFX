@@ -14,11 +14,11 @@ import javafx.scene.layout.HBox;
 
 public class StatusBar extends HBox{
 	private Button resetButton;
-	private Label whitePlayerAlert;
-	private Label blackPlayerAlert;
-	private Label whitePlayerTimer;
-	private Label blackPlayerTimer;
-	private Label winner;
+	public Label whitePlayerAlert;
+	public Label blackPlayerAlert;
+	public Label whitePlayerTimer;
+	public Label blackPlayerTimer;
+	public Label winner;
 	private GridPane statusBarGridPane; 
 	
 	
@@ -41,25 +41,26 @@ public class StatusBar extends HBox{
 		column = new ColumnConstraints();
 		column.setPercentWidth(30);
 		statusBarGridPane.getColumnConstraints().add(column);
-		statusBarGridPane.setPrefSize(2000, 150);
+		statusBarGridPane.setPrefSize(2000, 100);
 		RowConstraints row = new RowConstraints();;
-		row.setPercentHeight(45);
 		statusBarGridPane.getRowConstraints().add(row);
 		row = new RowConstraints();
-		row.setPercentHeight(45);
 		statusBarGridPane.getRowConstraints().add(row);
+		whitePlayerAlert.setWrapText(true);
+		
 		statusBarGridPane.addRow(0, whitePlayerAlert, resetButton, blackPlayerAlert);
 		statusBarGridPane.addRow(1, whitePlayerTimer, winner, blackPlayerTimer);
 		
-		statusBarGridPane.setVgap(30);
-		statusBarGridPane.setHgap(30);
-		statusBarGridPane.setPadding(new Insets(10, 10, 10, 10));
+		statusBarGridPane.setVgap(0);
+		statusBarGridPane.setHgap(0);
+		
+		statusBarGridPane.setPadding(new Insets(0 , 20, 0, 20));
 		
 		for(Node n: statusBarGridPane.getChildren()) {
 			GridPane.setHalignment(n, HPos.CENTER);
 			GridPane.setValignment(n, VPos.CENTER);
 			if(n instanceof Label) {
-				n.setStyle("-fx-font-size: 10pt; -fx-font-weight: bold; -fx-opacity: 1.0;");
+				n.setStyle("-fx-font-size: 12pt; -fx-font-weight: bold; -fx-opacity: 1.0;");
 			}
 		}
 		
@@ -74,7 +75,6 @@ public class StatusBar extends HBox{
 		super.resize(width, height);
 		setWidth(width);
 		setHeight(height);
-		
 	}
 	
 	public Button getResetButton() {
@@ -83,6 +83,22 @@ public class StatusBar extends HBox{
 	
 	public void setResetButton(Button resetButton) {
 		this.resetButton = resetButton;
+	}
+	
+	public void setWhitePlayerTimerText(String time) {
+		this.whitePlayerTimer.setText(time);
+	}
+	
+	public void setBlackPlayerTimerText(String time) {
+		this.blackPlayerTimer.setText(time);
+	}
+	
+	public void setWhitePlayerAlertText(String message) {
+		this.whitePlayerAlert.setText(message);
+	}
+	
+	public void setBlackPlayerAlertText(String message) {
+		this.blackPlayerAlert.setText(message);
 	}
 	
 }

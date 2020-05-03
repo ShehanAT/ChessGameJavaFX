@@ -1,6 +1,8 @@
 package board;
 
 import java.util.ArrayList;
+import application.Timer;
+import javafx.scene.transform.Rotate;
 import application.StatusBar;
 import java.util.Iterator;
 import java.util.List;
@@ -30,6 +32,7 @@ public class ChessBoard extends Pane{
 	private Rectangle background;
 	private Piece selectedPiece;
 	private StatusBar statusBar; 
+	private Timer timer;
 	
 	//declare pieces 
 	private Pawn whitePawn_1;
@@ -69,12 +72,18 @@ public class ChessBoard extends Pane{
 	
 	
 	public boolean check = false;
-	private boolean checkMate = false;
+	public boolean checkMate = false;
 	public boolean stalement = false;
 	
 	public ChessBoard(StatusBar newStatusBar) {
 		
 		statusBar = newStatusBar; // set statusbar passed in from custom control constructor
+		
+		statusBar.whitePlayerAlert.setText("White Player's turn!");
+		statusBar.blackPlayerAlert.setText("");
+		statusBar.whitePlayerTimer.setText("1:00");
+		statusBar.blackPlayerTimer.setText("1:00");
+		
 		board = new int[boardHeight][boardWidth];
 		tiles = new Tile[boardHeight][boardWidth];
 		pieces = new Piece[boardHeight][boardWidth];
@@ -86,11 +95,10 @@ public class ChessBoard extends Pane{
 		
 		for(int i = 0 ; i < 8 ; i++) {
 			if(i%2 == 0 || i == 0) 
-				
 				blackTile = true;
 			else
 				blackTile = false;
-			for(int j = 0 ; j < 8 ; j++) {
+			for(int j = 0 ; j < 8 ; j++) { //bug with blackTile
 				board[i][j] = empty_tile;
 				if(blackTile) {
 					tiles[i][j] = new Tile(0); //set tile to black color
@@ -107,6 +115,10 @@ public class ChessBoard extends Pane{
 		
 		initPiece();
 		current_player = white_player;
+		timer = new Timer(this); // set the timer
+		timer.timeline.setCycleCount(Timeline.INDEFINITE); // cause the timer to repeat indefinitely 
+		timer.timeline.play();
+		timer.playerTurn = current_player; // start timer for white player
 		
 	}
 	
@@ -148,61 +160,56 @@ public class ChessBoard extends Pane{
 		blackPawn_8 = new Pawn(2, 7, 1);
 		
 		pieces[0][0] = whiteRook_1;
-		pieces[1][0] = whiteKnight_1;
-		pieces[2][0] = whiteBishop_1;
-		pieces[3][0] = whiteQueen_1;
-		pieces[4][0] = whiteKing_1;
-		pieces[5][0] = whiteBishop_2;
-		pieces[6][0] = whiteKnight_2;
-		pieces[7][0] = whiteRook_2;
-		pieces[0][1] = whitePawn_1;
+		pieces[0][1] = whiteKnight_1;
+		pieces[0][2] = whiteBishop_1;
+		pieces[0][3] = whiteQueen_1;
+		pieces[0][4] = whiteKing_1;
+		pieces[0][5] = whiteBishop_2;
+		pieces[0][6] = whiteKnight_2;
+		pieces[0][7] = whiteRook_2;
+		pieces[1][0] = whitePawn_1;
 		pieces[1][1] = whitePawn_2;
-		pieces[2][1] = whitePawn_3;
-		pieces[3][1] = whitePawn_4;
-		pieces[4][1] = whitePawn_5;
-		pieces[5][1] = whitePawn_6;
-		pieces[6][1] = whitePawn_7;
-		pieces[7][1] = whitePawn_8;
+		pieces[1][2] = whitePawn_3;
+		pieces[1][3] = whitePawn_4;
+		pieces[1][4] = whitePawn_5;
+		pieces[1][5] = whitePawn_6;
+		pieces[1][6] = whitePawn_7;
+		pieces[1][7] = whitePawn_8;
 		
 	
 		
 		for(int i = 0 ; i < boardWidth; i++) {
 			for(int j = 2 ; j < 6; j++) { // setting the squares between the white and black sides to null
-				pieces[i][j] = null; 
+				pieces[j][i] = null; 
 			}
 		}
-//		for(int i = 2; i < 6; i++) {
-//			for(int j = 0 ; j < boardWidth; j++) {
-//				pieces[j][i] = null;
-//			}
-//		}
 		
-		pieces[0][7] = blackRook_1;
-		pieces[1][7] = blackKnight_1;
-		pieces[2][7] = blackBishop_1;
-		pieces[3][7] = blackQueen_1;
-		pieces[4][7] = blackKing_1;
-		pieces[5][7] = blackBishop_2;
-		pieces[6][7] = blackKnight_2;
+		pieces[7][0] = blackRook_1;
+		pieces[7][1] = blackKnight_1;
+		pieces[7][2] = blackBishop_1;
+		pieces[7][3] = blackQueen_1;
+		pieces[7][4] = blackKing_1;
+		pieces[7][5] = blackBishop_2;
+		pieces[7][6] = blackKnight_2;
 		pieces[7][7] = blackRook_2;
-		pieces[0][6] = blackPawn_1;
-		pieces[1][6] = blackPawn_2;
-		pieces[2][6] = blackPawn_3;
-		pieces[3][6] = blackPawn_4;
-		pieces[4][6] = blackPawn_5;
-		pieces[5][6] = blackPawn_6;
+		pieces[6][0] = blackPawn_1;
+		pieces[6][1] = blackPawn_2;
+		pieces[6][2] = blackPawn_3;
+		pieces[6][3] = blackPawn_4;
+		pieces[6][4] = blackPawn_5;
+		pieces[6][5] = blackPawn_6;
 		pieces[6][6] = blackPawn_7;
-		pieces[7][6] = blackPawn_8;
+		pieces[6][7] = blackPawn_8;
 		
 	
 		
 		for(int i = 0 ; i < boardWidth; i++) { // columns
 			for(int j = 0; j < boardHeight; j++) { // rows
 				if(i == 0 || i == 1) {
-					board[i][j] = 2; //indicate this is a white piece
+					board[i][j] = 1; //indicate this is a white piece
 				}
 				else if(i == 6 || i == 7) {
-					board[i][j] = 1; //indicate this is a black piece
+					board[i][j] = 2; //indicate this is a black piece
 				}
 				else {
 					board[i][j] = 0; //indicate this is a unoccupied piece
@@ -211,7 +218,7 @@ public class ChessBoard extends Pane{
 		}
 		
 		for(int i = 0 ; i < 8; i++) {
-			getChildren().addAll(pieces[i][0].getImage(), pieces[i][1].getImage(), pieces[i][6].getImage(), pieces[i][7].getImage());
+			getChildren().addAll(pieces[0][i].getImage(), pieces[1][i].getImage(), pieces[6][i].getImage(), pieces[7][i].getImage());
 		}
 		
 				
@@ -225,6 +232,7 @@ public class ChessBoard extends Pane{
 		background.setWidth(width);
 		background.setHeight(height);
 		
+		System.out.println("width: " + width + ", height: " + height);
 		cell_width = width / 8.0; //calculating the width of each tile on the chess board 
 		cell_height = height / 8.0; //calculating the height of each tile on the chess board 
 		
@@ -232,13 +240,16 @@ public class ChessBoard extends Pane{
 		for(int i = 0; i < 8; i++) {
 			for(int j = 0; j < 8; j++){
 				if(board[i][j] != 0) {//if tile is not supposed to be empty add appropriate piece
-					pieces[j][i].relocate(i * cell_width, j * cell_height);
-					pieces[j][i].resize(cell_width, cell_height);
+					
+					pieces[i][j].relocate(j * cell_height, i * cell_width);
+					pieces[i][j].resize(cell_height, cell_width);
 				}
+				
 				tiles[i][j].relocate(i * cell_width, j * cell_height);
 				tiles[i][j].resize(cell_width, cell_height);	
 			}
 		}
+		
 	}
 	
 	
@@ -258,6 +269,18 @@ public class ChessBoard extends Pane{
 					tiles[i][j].unHighlight();
 				}
 			}
+		}
+	}
+	
+	public void timerOver(int playerOutOfTime) {
+		timer.timeline.stop(); //stops the timer 
+		if(playerOutOfTime == 1) {
+			statusBar.setWhitePlayerAlertText("White Player has run out of time!");
+			statusBar.setBlackPlayerAlertText("Black Player has won!");
+		}
+		else if(playerOutOfTime == 2) {
+			statusBar.setBlackPlayerAlertText("Black Player has run out of time!");
+			statusBar.setWhitePlayerAlertText("White Player has won!");
 		}
 	}
 	

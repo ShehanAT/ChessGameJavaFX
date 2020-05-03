@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.transform.Translate;
-
+import javafx.scene.text.*;
 public class Tile extends Group{
 	private Translate pos;
 	private Rectangle tile;
@@ -20,7 +20,7 @@ public class Tile extends Group{
 		else if(i == 1) {
 			tile.setFill(Color.WHITE);
 		}
-		getChildren().add(tile); //adding background color to each tile object
+		getChildren().add(tile);
 	}
 	
 	@Override 
@@ -36,6 +36,7 @@ public class Tile extends Group{
 		pos.setX(x);
 		pos.setY(y);
 	}
+
 	
 	public void highlightWindow(Color color) {
 		tile.setStrokeType(StrokeType.CENTERED);
