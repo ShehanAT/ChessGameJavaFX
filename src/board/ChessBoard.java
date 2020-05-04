@@ -1,6 +1,7 @@
 package board;
 
 import java.util.ArrayList;
+import application.GameLogic;
 import application.Timer;
 import javafx.scene.transform.Rotate;
 import application.StatusBar;
@@ -74,6 +75,27 @@ public class ChessBoard extends Pane{
 	public boolean check = false;
 	public boolean checkMate = false;
 	public boolean stalement = false;
+	
+	//GameLogic variables 
+	private GameLogic gameLogic = new GameLogic();
+	public List<Piece> checkPieces = new ArrayList<Piece>();
+	public List<Piece> saviorPieces = new ArrayList<Piece>();
+	public int playerOneRook = 2;
+	public int playerOneBishopLightSquare = 1;
+	public int playerOneBishopDarkSquare = 1;
+	public int playerOneKnight = 2;
+	public int playerOneQueen = 1;
+	public int playerOnePawn = 8;
+	public int playerTwoRook = 2;
+	public int playerTwoBishopLightSquare = 1;
+	public int playerTwoBishopDarkSquare = 2;
+	public int playerTwoKnight = 2;
+	public int playerTwoQueen = 1;
+	public int playerTwoPawn = 8;
+	private Alert alert;
+	
+	
+	
 	
 	public ChessBoard(StatusBar newStatusBar) {
 		

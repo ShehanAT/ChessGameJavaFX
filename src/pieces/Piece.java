@@ -7,9 +7,9 @@ import javafx.scene.transform.Translate;
 import board.ChessBoard;
 public abstract class Piece extends Group{
 	private int type; // black or white piece 
-	protected int xPos; // x coordinate of piece 
-	protected int yPos; // y coordinate of piece
-	protected String name; //name of piece
+	public int xPos; // x coordinate of piece 
+	public int yPos; // y coordinate of piece
+	public String name; //name of piece
 	protected ImageView imageView = new ImageView(); //image of the piece 
 	protected Translate pos;
 	
