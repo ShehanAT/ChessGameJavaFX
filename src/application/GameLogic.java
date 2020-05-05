@@ -492,7 +492,165 @@ public class GameLogic {
 	}
 	
 	
+	public void findAllSaviorPieces(ChessBoard chessBoard, int xPos, int yPos, int type, boolean protect) {
+		int y = 0;
+		int x = 0;
+		int enemyType = 0;
+		if(type == 1)
+			enemyType = 2;
+		else
+			enemyType = 1;
 	
+		//checking horizontal left 
+		for(x = xPos - 1; x >= 0; x--) {
+			if(chessBoard.getBoardPosition(x, yPos) == type)
+				break;
+			else if(chessBoard.getBoardPosition(x, yPos) == enemyType) {
+				if(chessBoard.getPiece(x, yPos) != null && (chessBoard.getPiece(x, yPos).name == "Queen" || chessBoard.getPiece(x, yPos).name == "Rook"))
+					chessBoard.saviorPieces.add(chessBoard.getPiece(x, yPos));
+				else
+					break;
+				
+			}
+		}
+		
+		//checking horizontal right 
+		for(x = xPos + 1; x < chessBoard.getBoardWidth(); x++) {
+			if(chessBoard.getBoardPosition(x, yPos) == type)
+				break;
+			else if(chessBoard.getBoardPosition(x, yPos) == enemyType) {
+				if(chessBoard.getPiece(x, yPos) != null && (chessBoard.getPiece(x, yPos).name == "Queen" || chessBoard.getPiece(x, yPos).name == "Rook"))
+					chessBoard.saviorPieces.add(chessBoard.getPiece(x, yPos));
+				else
+					break;
+				
+			}
+		}
+		
+		//checking vertical up 
+		for(y = yPos - 1; y >= 0; y--) {
+			if(chessBoard.getBoardPosition(x, yPos) == type)
+				break;
+			else if(chessBoard.getBoardPosition(x, yPos) == enemyType) {
+				if(enemyType == 2 && protect && y == yPos - 1 && chessBoard.getPiece(xPos, y) != null && chessBoard.getPiece(xPos, y).name == "Pawn") {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(xPos, y));
+				}
+				if(enemyType == 2 && protect && y == yPos - 2 && chessBoard.getPiece(xPos, y) != null && chessBoard.getPiece(xPos, y).name == "Pawn" && chessBoard.getPiece(xPos, y).isFirstTimeMove()) {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(xPos, y));
+				}
+				if(chessBoard.getPiece(xPos, y) != null && (chessBoard.getPiece(xPos, y).name == "Queen" || chessBoard.getPiece(xPos, y).name == "Rook")) {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(xPos, y));
+				}
+				else {
+					break;
+				}
+			}
+			
+		}
+		
+		//checking vertical down
+		for(y = yPos + 1; y < chessBoard.getBoardHeight(); y++) {
+			if(chessBoard.getBoardPosition(x, yPos) == type)
+				break;
+			else if(chessBoard.getBoardPosition(x, yPos) == enemyType) {
+				if(enemyType == 1 && protect && y == yPos + 1 && chessBoard.getPiece(xPos, y) != null && chessBoard.getPiece(xPos, y).name == "Pawn") {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(xPos, y));
+				}
+				if(enemyType == 1 && protect && y == yPos + 2 && chessBoard.getPiece(xPos, y) != null && chessBoard.getPiece(xPos, y).name == "Pawn" && chessBoard.getPiece(xPos, y).isFirstTimeMove()) {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(xPos, y));
+				}
+				if(chessBoard.getPiece(xPos, y) != null && (chessBoard.getPiece(xPos, y).name == "Queen" || chessBoard.getPiece(xPos, y).name == "Rook")) {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(xPos, y));
+				}
+				else {
+					break;
+				}
+			}
+			
+		}
+		
+		//diagonal 1/up
+		for(x = xPos - 1, y = yPos - 1; x >= 0 && y >= 00 ; x--, y--) {
+			if(chessBoard.getBoardPosition(x, y) == type)
+				break;
+			else if(chessBoard.getBoardPosition(x, y) == enemyType) {
+				if(protect == false && y == yPos - 1 && chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (type == 1 && chessBoard.getPiece(x, y).name == "Pawn")) {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
+				}
+				if(chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook")) {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
+				}
+				else
+					break;
+			}
+		}
+		
+		//diagonal 1/up
+		for(x = xPos + 1, y = yPos + 1; x < chessBoard.getBoardWidth() && y < chessBoard.getBoardHeight(); x++, y++) {
+			if(chessBoard.getBoardPosition(x, y) == type)
+				break;
+			else if(chessBoard.getBoardPosition(x, y) == enemyType) {
+				if(protect == false && y == yPos + 1 &&  chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (type == 2 && chessBoard.getPiece(x, y).name == "Pawn")) {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
+				}
+				if(chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook")) {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
+				}
+				else
+					break;
+			}
+		}
+		
+		//diagonal 2/up
+		for(x = xPos + 1, y = yPos - 1; x < chessBoard.getBoardWidth() && y >= 0; x++, y--) {
+			if(chessBoard.getBoardPosition(x, y) == type)
+				break;
+			else if(chessBoard.getBoardPosition(x, y) == enemyType) {
+				if(protect == false && y == yPos - 1 && chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (type == 1 && chessBoard.getPiece(x, y).name == "Pawn")) {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
+				}
+				if(chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook")) {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
+				}
+				else
+					break;
+			}
+		}
+		
+		//diagonal 2/down 
+		for(x = xPos - 1, y = yPos + 1; x >= 0 && y < chessBoard.getBoardHeight(); x--, y++) {
+			if(chessBoard.getBoardPosition(x, y) == type)
+				break;
+			else if(chessBoard.getBoardPosition(x, y) == enemyType) {
+				if(protect == false && y == yPos + 1 && chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (type == 2 && chessBoard.getPiece(x, y).name == "Pawn")) {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
+				}
+				if(chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook")) {
+					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
+				}
+				else
+					break;
+			}
+		}
+		
+		//Knight
+		for(y = -2; y <= 2; y++) {
+			if(y != 0) {
+				x = y % 2 == 0 ? 1 : 2;
+				if(y + yPos >= 0 && yPos + y > chessBoard.getBoardHeight() && xPos - x >= 0 && xPos - x < chessBoard.getBoardWidth() && chessBoard.getBoardPosition(xPos - x, yPos + y) != type && chessBoard.getBoardPosition(xPos - x, yPos + y) != 0) {
+					if(chessBoard.getPiece(xPos - x, yPos + y) != null && chessBoard.getPiece(xPos - x, yPos + y).name == "Knight") {
+						chessBoard.saviorPieces.add(chessBoard.getPiece(xPos - x, yPos + y));
+					}
+				}
+				if(y + yPos >= 0 && yPos + y > chessBoard.getBoardHeight() && xPos + x >= 0 && xPos + x < chessBoard.getBoardWidth() && chessBoard.getBoardPosition(xPos + x, yPos + y) != type && chessBoard.getBoardPosition(xPos + x, yPos + y) != 0) {
+					if(chessBoard.getPiece(xPos + x, yPos + y) != null && chessBoard.getPiece(xPos + x, yPos + y).name == "Knight") {
+						chessBoard.saviorPieces.add(chessBoard.getPiece(xPos + x, yPos + y));
+					}
+				}
+			}
+		}
+	
+	}
 	
 	
 }
