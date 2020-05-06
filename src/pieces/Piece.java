@@ -6,15 +6,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.transform.Translate;
 import board.ChessBoard;
 public abstract class Piece extends Group{
-	private int type; // black or white piece 
+	public int type; // black or white piece 
 	public int xPos; // x coordinate of piece 
 	public int yPos; // y coordinate of piece
 	public String name; //name of piece
 	protected ImageView imageView = new ImageView(); //image of the piece 
 	protected Translate pos;
 	
-	protected boolean firstTimeMove; //to check if the piece has been used before 
-	protected boolean saviorPiece; //to check if piece can be moved when in check situation
+	public boolean firstTimeMove; //to check if the piece has been used before 
+	public boolean saviorPiece; //to check if piece can be moved when in check situation
 	
 	public Piece(int type, int xPos, int yPos) {
 		this.type = type; 

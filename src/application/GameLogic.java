@@ -212,11 +212,96 @@ public class GameLogic {
 						break;
 					}
 					else if(chessBoard.getBoardPosition(x, y) == enemyType) {
-						if(chessBoard.getPeice)
+						if(chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook"){
+							return true;
+						}
+						else
+							break;
 					}
 				}
+				break;
 			}
+			else if(chessBoard.getBoardPosition(x, y) != 0)
+				break;
 		}
+		
+		//check for protecting piece on the diagonal down direction of the king
+		y = yPos + 1;
+		for(int x = xPos - 1; x >= 0 && y < chessBoard.getBoardHeight(); x--, y++) {
+			if(chessBoard.getBoardPosition(x, y) == type && chessBoard.getPiece(x, y).name == "King") {
+				y = yPos - 1;
+				for(x = xPos + 1; x < chessBoard.getBoardWidth() && y >= 0; x++, y--) {
+					if(chessBoard.getBoardPosition(x, y) == type) {
+						break;
+					}
+					else if(chessBoard.getBoardPosition(x, y) == enemyType) {
+						if(chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook"){
+							return true;
+						}
+						else
+							break;
+					}
+				}
+				break;
+			}
+			else if(chessBoard.getBoardPosition(x, y) != 0)
+				break;
+		}
+		return false;
+	}
+	
+	public boolean backslashDiagonalProtection(ChessBoard chessBoard, int xPos, int yPos, int type) {
+		int enemyType = 0;
+		if(type == 1)
+			enemyType = 2;
+		else 
+			enemyType = 1;
+		int y = yPos - 1;
+		for(int x = xPos - 1; x >= 0 && y >= 0; x--, y--) {
+			if(chessBoard.getBoardPosition(x, y) == type && chessBoard.getPiece(x, y).name == "King") {
+				y = yPos + 1;
+				for(x = xPos + 1; x < chessBoard.getBoardWidth() && y < chessBoard.getBoardHeight(); x++, y++) {
+					if(chessBoard.getBoardPosition(x, y) == type)
+						break;
+					else if(chessBoard.getBoardPosition(x, y) == enemyType) {
+						if(chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook")
+							return true;
+						else 
+							break;
+					}
+						
+				}
+				break;
+			}
+			else if(chessBoard.getBoardPosition(x, y) != 0)
+				break;
+			
+		}
+		
+		//check for king on the diagonal down 
+		y = yPos + 1;
+		for(int x = xPos + 1; x < chessBoard.getBoardWidth() && y < chessBoard.getBoardHeight(); x++, y++) {
+			if(chessBoard.getBoardPosition(x, y) == type && chessBoard.getPiece(x, y).name == "King") {
+				y = yPos - 1;
+				for(x = xPos - 1; x >= 0 && y >= 0; x--, y--) {
+					if(chessBoard.getBoardPosition(x, y) == type)
+						break;
+					else if(chessBoard.getBoardPosition(x, y) == enemyType) {
+						if(chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook")
+							return true;
+						else 
+							break;
+					}
+						
+				}
+				break;
+			}
+			else if(chessBoard.getBoardPosition(x, y) != 0)
+				break;
+			
+		}
+		return false;
+		
 	}
 	
 	public boolean isCheck(ChessBoard chessBoard, int xPos, int yPos, int type, boolean kingCanCapture) {
@@ -651,6 +736,166 @@ public class GameLogic {
 		}
 	
 	}
+	
+	public void canCapture(ChessBoard chessBoard, Piece checkPiece) {
+		findAllSaviorPieces(chessBoard, checkPiece.xPos, checkPiece.yPos, checkPiece.type, true);
+	}
+	
+	public boolean isCheckMate(ChessBoard chessBoard, int xPos, int yPos, int type) {
+		boolean checkMate = true;
+		int y = 0;
+		int x = 0;
+		for(y = yPos - 1; y <= yPos + 1; y++) {
+			for(x = xPos - 1; x <= xPos + 1; x++) {
+				if(y >= 0 && y < chessBoard.getBoardHeight() && x >= 0 && x < chessBoard.getBoardWidth() && chessBoard.getBoardPosition(x,  y) != type) {
+					if(!isCheck(chessBoard, x, y, type, true))
+						checkMate = false;
+						break;
+				}
+			}
+			if(!checkMate)
+				break;
+		}
+		
+		if(chessBoard.checkPieces.size() < 2) {
+			Piece checkPiece = chessBoard.checkPieces.get(0);
+			canCapture(chessBoard, checkPiece);
+			canProtect(chessBoard, xPos, yPos, type, checkPiece);
+			if(!chessBoard.saviorPieces.isEmpty()) {
+				for(Iterator<Piece> piece = chessBoard.saviorPieces.iterator(); piece.hasNext();) {
+					Piece item = piece.next();
+					item.saviorPiece = true;
+					if(verticalProtection(chessBoard, item.xPos, item.yPos, item.type) || horizontalProtection(chessBoard, item.xPos, item.yPos, item.type) || slashDiagonalProtection(chessBoard, item.xPos, item.yPos, item.type) || backslashDiagonalProtection(chessBoard, item.xPos, item.yPos, item.type)) {
+						item.saviorPiece = false;
+						piece.remove();
+					}
+				}
+			}
+			if(!chessBoard.saviorPieces.isEmpty())
+				checkMate = false;
+		}
+		return checkMate;
+		
+	}
+	
+
+	
+	public void canProtect(ChessBoard chessBoard, int xPos, int yPos, int type, Piece checkPiece) {
+		if(checkPiece.name == "Knight" || checkPiece.name == "Pawn")
+			return ;
+		//check for vertical up threat
+		if(xPos == checkPiece.xPos && yPos > checkPiece.yPos) {
+			for(int y = checkPiece.yPos + 1; y < yPos; y++) {
+				findAllSaviorPieces(chessBoard, checkPiece.xPos, y, checkPiece.type, true);
+			}
+		}
+		
+		//check for vertical down threat
+		if(xPos == checkPiece.xPos && yPos < checkPiece.yPos) {
+			for(int y = checkPiece.yPos - 1; y > yPos; y--) {
+				findAllSaviorPieces(chessBoard, checkPiece.xPos, y, checkPiece.type, true);
+			}
+		}
+		
+		//check for horizontal left threat 
+		if(xPos > checkPiece.xPos && yPos == checkPiece.yPos) {
+			for(int x = checkPiece.xPos + 1; x < xPos; x++) {
+				findAllSaviorPieces(chessBoard, x, checkPiece.yPos, checkPiece.type, true);
+			}
+		}
+		
+		//check for horizontal right threat
+		if(xPos < checkPiece.xPos && yPos == checkPiece.yPos) {
+			for(int x = checkPiece.xPos - 1; x < xPos; x--) {
+				findAllSaviorPieces(chessBoard, x, checkPiece.yPos, checkPiece.type, true);
+			}
+		}
+		
+		//diagonal 1/up threat
+		int y = checkPiece.yPos + 1;
+		if(xPos > checkPiece.xPos && yPos > checkPiece.yPos) {
+			for(int x = checkPiece.xPos - 1; x < xPos && y < yPos; x++, y++) {
+				findAllSaviorPieces(chessBoard, x, y, checkPiece.type, true);
+			}
+		}
+		
+		//diagonal 1/down threat
+		y = checkPiece.yPos - 1;
+		if(xPos < checkPiece.xPos && yPos < checkPiece.yPos) {
+			for(int x = checkPiece.xPos - 1; x > xPos && y > yPos; x--, y--){
+				findAllSaviorPieces(chessBoard, x, y, checkPiece.type, true);
+			}
+		}
+		
+		//diagonal 2/up threat
+		y = checkPiece.yPos + 1;
+		if(xPos < checkPiece.xPos && yPos > checkPiece.yPos) {
+			for(int x = checkPiece.xPos - 1; x > xPos && y > yPos; x--, y--){
+				findAllSaviorPieces(chessBoard, x, y, checkPiece.type, true);
+			}
+		}
+		
+		//diagonal 2/down threat
+		y = checkPiece.yPos - 1;
+		if(xPos > checkPiece.xPos && yPos < checkPiece.yPos) {
+			for(int x = checkPiece.xPos + 1; x < xPos && y > yPos; x++, y--){
+				findAllSaviorPieces(chessBoard, x, y, checkPiece.type, true);
+			}
+		}
+	}
+	
+	public boolean isThisProtecting(ChessBoard chessBoard, int xPos, int yPos, int type) {
+		Piece checkPiece = chessBoard.checkPieces.get(0);
+		//vertical up threat 
+		if(chessBoard.getKing(type).xPos == checkPiece.xPos && chessBoard.getKing(type).yPos > checkPiece.yPos)
+			if(xPos == chessBoard.getKing(type).xPos && yPos < chessBoard.getKing(type).yPos && yPos > checkPiece.yPos)
+				return true;
+		//vertical down threat
+		if(chessBoard.getKing(type).xPos == checkPiece.xPos && chessBoard.getKing(type).yPos < checkPiece.yPos)
+			if(xPos == chessBoard.getKing(type).xPos && yPos > chessBoard.getKing(type).yPos && yPos < checkPiece.yPos)
+				return true;
+		//horizontal left threat
+		if(chessBoard.getKing(type).xPos > checkPiece.xPos && chessBoard.getKing(type).yPos == checkPiece.yPos)
+			if(xPos == chessBoard.getKing(type).xPos && yPos < chessBoard.getKing(type).yPos && yPos > checkPiece.yPos)
+				return true;
+		//horizontal left threat
+		if(chessBoard.getKing(type).xPos < checkPiece.xPos && chessBoard.getKing(type).yPos == checkPiece.yPos)
+			if(xPos == chessBoard.getKing(type).xPos && yPos > chessBoard.getKing(type).yPos && yPos < checkPiece.yPos)
+				return true;
+		
+		//diagonal 1/up threat 
+		int y = checkPiece.yPos;
+		if(chessBoard.getKing(type).xPos > checkPiece.xPos && chessBoard.getKing(type).yPos > checkPiece.yPos)
+			for(int x = checkPiece.xPos; x < chessBoard.getKing(type).xPos && y < chessBoard.getKing(type).yPos; x++, y++) {
+				if(xPos == x && yPos == y)
+					return true; 
+			}
+		//diagonal 1/down threat 
+		y = checkPiece.yPos;
+		if(chessBoard.getKing(type).xPos < checkPiece.xPos && chessBoard.getKing(type).yPos < checkPiece.yPos)
+			for(int x = checkPiece.xPos; x > chessBoard.getKing(type).xPos && y > chessBoard.getKing(type).yPos; x--, y--) {
+				if(xPos == x && yPos == y)
+					return true; 
+			}
+		//diagonal 2/up threat 
+		y = checkPiece.yPos;
+		if(chessBoard.getKing(type).xPos < checkPiece.xPos && chessBoard.getKing(type).yPos > checkPiece.yPos)
+			for(int x = checkPiece.xPos; x > chessBoard.getKing(type).xPos && y < chessBoard.getKing(type).yPos; x--, y++) {
+				if(xPos == x && yPos == y)
+					return true; 
+			}
+		//diagonal 2/down threat 
+		y = checkPiece.yPos;
+		if(chessBoard.getKing(type).xPos > checkPiece.xPos && chessBoard.getKing(type).yPos < checkPiece.yPos)
+			for(int x = checkPiece.xPos; x < chessBoard.getKing(type).xPos && y > chessBoard.getKing(type).yPos; x++, y--) {
+				if(xPos == x && yPos == y)
+					return true; 
+			}
+		
+		return false;
+	}
+	
+	
 	
 	
 }

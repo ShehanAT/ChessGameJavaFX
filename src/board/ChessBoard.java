@@ -330,6 +330,14 @@ public class ChessBoard extends Pane{
 		return pieces[x][y];
 	}
 	
+	public Piece getKing(int type) {
+		if(type == 1) {
+			return whiteKing_1;
+		}
+		else
+			return blackKing_1;
+	}
+	
 	public StatusBar getStatusBar() {
 		return statusBar;
 	}
