@@ -1,6 +1,7 @@
 package pieces;
 
 import javafx.scene.Group;
+import application.GameLogic;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.transform.Translate;
@@ -12,7 +13,7 @@ public abstract class Piece extends Group{
 	public String name; //name of piece
 	protected ImageView imageView = new ImageView(); //image of the piece 
 	protected Translate pos;
-	
+	protected GameLogic gameLogic;
 	public boolean firstTimeMove; //to check if the piece has been used before 
 	public boolean saviorPiece; //to check if piece can be moved when in check situation
 	
@@ -74,16 +75,44 @@ public abstract class Piece extends Group{
 		
 		if(!chessBoard.check && this.canCastle(chessBoard) != 0){
 			if(this.canCastle(chessBoard) == 1) {
-				
+				chessBoard.setBoard(x-1, y, this.type);
+				chessBoard.setPiece(x-1, y, this);
+				this.xPos = x - 1;
+				chessBoard.setBoard(5, y, chessBoard.getPiece(7, y).type);
+				chessBoard.setPiece(5, y, chessBoard.getPiece(7, y));
+				chessBoard.getPiece(7, y).xPos = 7; //changing xPos of piece
+				chessBoard.setBoard(7, y, 0);
+				chessBoard.setPiece(7, y, null);
 			}
 			if(this.canCastle(chessBoard) == 2){
-				
+				chessBoard.setBoard(x+2, y, this.type);
+				chessBoard.setPiece(x+2, y, this);
+				this.xPos = x + 2;
+				chessBoard.setBoard(3, y, chessBoard.getPiece(0, y).type);
+				chessBoard.setPiece(3, y, chessBoard.getPiece(0, y));
+				chessBoard.getPiece(3, y).xPos = 3; //changing xPos of piece
+				chessBoard.setBoard(0, y, 0);
+				chessBoard.setPiece(0, y, null);
 			}
 			if(this.canCastle(chessBoard) == 3) {
-				
+				chessBoard.setBoard(x-1, y, this.type);
+				chessBoard.setPiece(x-1, y, this);
+				this.xPos = x - 1;
+				chessBoard.setBoard(5, y, chessBoard.getPiece(7, y).type);
+				chessBoard.setPiece(5, y, chessBoard.getPiece(7, y));
+				chessBoard.getPiece(5, y).xPos = 5; //changing xPos of piece
+				chessBoard.setBoard(7, y, 0);
+				chessBoard.setPiece(7, y, null);
 			}
 			if(this.canCastle(chessBoard) == 4) {
-				
+				chessBoard.setBoard(x+2, y, this.type);
+				chessBoard.setPiece(x+2, y, this);
+				this.xPos = x + 2;
+				chessBoard.setBoard(3, y, chessBoard.getPiece(0, y).type);
+				chessBoard.setPiece(3, y, chessBoard.getPiece(0, y));
+				chessBoard.getPiece(3, y).xPos = 3; //changing xPos of piece
+				chessBoard.setBoard(0, y, 0);
+				chessBoard.setPiece(0, y, null);
 			}
 		}
 		else {
