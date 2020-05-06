@@ -306,6 +306,66 @@ public class ChessBoard extends Pane{
 		}
 	}
 	
+	public void createPromotePiece(Piece piece) {
+		Piece promotedPiece;
+		
+		alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Promote Piece");
+		alert.setHeaderText("You can choose to promote your pawn");
+		alert.setContentText("Choose promotional piece: ");
+		
+		ButtonType buttonRook = new ButtonType("Rook");
+		ButtonType buttonQueen = new ButtonType("Queen");
+		ButtonType buttonBishop = new ButtonType("Bishop");
+		ButtonType buttonKnight = new ButtonType("Knight");
+		
+		alert.getButtonTypes().addAll(buttonRook, buttonQueen, buttonBishop, buttonKnight);
+		
+		Optional<ButtonType> result = alert.showAndWait();
+		if(result.get() == buttonRook) {
+			promotedPiece = new Rook(piece.xPos, piece.yPos, piece.type);
+			getChildren().remove(piece.getImage());
+			getChildren().add(promotedPiece.getImage());
+			pieces[piece.xPos][piece.yPos] = promotedPiece;
+			if(piece.type == 1)
+				playerOneRook++;
+			else
+				playerTwoRook++;
+		}
+		else if(result.get() == buttonQueen) {
+			promotedPiece = new Queen(piece.xPos, piece.yPos, piece.type);
+			getChildren().remove(piece.getImage());
+			getChildren().add(promotedPiece.getImage());
+			pieces[piece.xPos][piece.yPos] = promotedPiece;
+			if(piece.type == 1)
+				playerOneQueen++;
+			else
+				playerTwoQueen++;
+		}
+		else if(result.get() == buttonBishop) {
+			promotedPiece = new Bishop(piece.xPos, piece.yPos, piece.type);
+			getChildren().remove(piece.getImage());
+			getChildren().add(promotedPiece.getImage());
+			pieces[piece.xPos][piece.yPos] = promotedPiece;
+			if(piece.type == 1)
+				if((piece.yPos + piece.xPos) % 2 == 0) {
+					playerOneBishopLightSquare++;
+				}else {
+					playerOneBishopDarkSquare++;
+				}
+			else
+				if((piece.yPos + piece.xPos) % 2 == 0) {
+					playerTwoBishopLightSquare++;
+				}else {
+					playerTwoBishopDarkSquare++;
+				}
+		}
+		else if(result.get() == buttonKnight) {
+			
+		}
+		
+	}
+	
 	public int getBoardHeight() {
 		return this.boardHeight;
 	}

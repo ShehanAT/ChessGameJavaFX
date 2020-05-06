@@ -65,6 +65,97 @@ public abstract class Piece extends Group{
 	}
 	
 	
+	public void movePiece(ChessBoard chessBoard, int x, int y) {
+	/* after selecting and picking highlighted square to move to this method moves the piece
+	 * there
+	 */
+		chessBoard.setBoard(this.xPos, this.yPos, 0);
+		chessBoard.setPiece(this.xPos, this.yPos, null);
+		
+		if(!chessBoard.check && this.canCastle(chessBoard) != 0){
+			if(this.canCastle(chessBoard) == 1) {
+				
+			}
+			if(this.canCastle(chessBoard) == 2){
+				
+			}
+			if(this.canCastle(chessBoard) == 3) {
+				
+			}
+			if(this.canCastle(chessBoard) == 4) {
+				
+			}
+		}
+		else {
+			this.xPos = x;
+			this.yPos = y;
+			if(chessBoard.getPiece(x, y) != null) 
+				chessBoard.getPiece(x, y).capture(chessBoard);
+			chessBoard.setPiece(x, y, this);
+			chessBoard.setBoard(x, y, this.type);
+			if(this.name == "Pawn" && ((this.type == 1 && this.yPos == 0) || (this.type == 2 && this.yPos == 7)))
+			{
+				chessBoard.createPromotePiece(this);
+				if(this.type == 1)
+					chessBoard.playerOnePawn--;
+				else
+					chessBoard.playerTwoPawn--;
+				
+			}
+			
+		}
+	}
+	
+	public void capture(ChessBoard chessBoard) {
+		if(this.type == 1) {
+			if(this.name == "Rook") {
+				chessBoard.playerOneRook--;
+			}
+			else if(this.name == "Queen") {
+				chessBoard.playerOneQueen--;
+			}
+			else if(this.name == "Bishop" && ((this.yPos + this.xPos) % 2 != 0)) {
+				chessBoard.playerOneBishopDarkSquare--;
+			}
+			else if(this.name == "Bishop" && ((this.yPos + this.xPos) % 2 == 0)) {
+				chessBoard.playerOneBishopLightSquare--;
+			}
+			else if(this.name == "Pawn") {
+				chessBoard.playerOnePawn--;
+			}
+			else if(this.name == "Knight") {
+				chessBoard.playerOneKnight--;
+			}
+		}else {
+			if(this.name == "Rook") {
+				chessBoard.playerTwoRook--;
+			}
+			else if(this.name == "Queen") {
+				chessBoard.playerTwoQueen--;
+			}
+			else if(this.name == "Bishop" && ((this.yPos + this.xPos) % 2 != 0)) {
+				chessBoard.playerTwoBishopDarkSquare--;
+			}
+			else if(this.name == "Bishop" && ((this.yPos + this.xPos) % 2 == 0)) {
+				chessBoard.playerTwoBishopLightSquare--;
+			}
+			else if(this.name == "Pawn") {
+				chessBoard.playerTwoPawn--;
+			}
+			else if(this.name == "Knight") {
+				chessBoard.playerTwoKnight--;
+			}
+			
+		}
+		chessBoard.getChildren().remove(this.getImage());
+	}
+	
+	public int canCastle(ChessBoard chessBoard) {
+		return 0;
+	}
+	
+	
+	
 	public ImageView getImage() {
 		return imageView;
 		
