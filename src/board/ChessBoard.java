@@ -180,47 +180,47 @@ public class ChessBoard extends Pane{
 		blackPawn_7 = new Pawn(2, 6, 1);
 		blackPawn_8 = new Pawn(2, 7, 1);
 		
-		pieces[0][0] = whiteRook_1;
-		pieces[0][1] = whiteKnight_1;
-		pieces[0][2] = whiteBishop_1;
-		pieces[0][3] = whiteQueen_1;
-		pieces[0][4] = whiteKing_1;
-		pieces[0][5] = whiteBishop_2;
-		pieces[0][6] = whiteKnight_2;
-		pieces[0][7] = whiteRook_2;
-		pieces[1][0] = whitePawn_1;
-		pieces[1][1] = whitePawn_2;
-		pieces[1][2] = whitePawn_3;
-		pieces[1][3] = whitePawn_4;
-		pieces[1][4] = whitePawn_5;
-		pieces[1][5] = whitePawn_6;
-		pieces[1][6] = whitePawn_7;
-		pieces[1][7] = whitePawn_8;
+		pieces[0][7] = whiteRook_1;
+		pieces[1][7] = whiteKnight_1;
+		pieces[2][7] = whiteBishop_1;
+		pieces[3][7] = whiteQueen_1;
+		pieces[4][7] = whiteKing_1;
+		pieces[5][7] = whiteBishop_2;
+		pieces[6][7] = whiteKnight_2;
+		pieces[7][7] = whiteRook_2;
+		pieces[0][6] = whitePawn_1;
+		pieces[1][6] = whitePawn_2;
+		pieces[2][6] = whitePawn_3;
+		pieces[3][6] = whitePawn_4;
+		pieces[4][6] = whitePawn_5;
+		pieces[5][6] = whitePawn_6;
+		pieces[6][6] = whitePawn_7;
+		pieces[7][6] = whitePawn_8;
 		
 	
 		
-		for(int i = 0 ; i < boardWidth; i++) {
-			for(int j = 2 ; j < 6; j++) { // setting the squares between the white and black sides to null
+		for(int i = 2 ; i < 6; i++) {
+			for(int j = 0 ; j < boardWidth; j++) { // setting the squares between the white and black sides to null
 				pieces[j][i] = null; 
 			}
 		}
 		
-		pieces[7][0] = blackRook_1;
-		pieces[7][1] = blackKnight_1;
-		pieces[7][2] = blackBishop_1;
-		pieces[7][3] = blackQueen_1;
-		pieces[7][4] = blackKing_1;
-		pieces[7][5] = blackBishop_2;
-		pieces[7][6] = blackKnight_2;
-		pieces[7][7] = blackRook_2;
-		pieces[6][0] = blackPawn_1;
-		pieces[6][1] = blackPawn_2;
-		pieces[6][2] = blackPawn_3;
-		pieces[6][3] = blackPawn_4;
-		pieces[6][4] = blackPawn_5;
-		pieces[6][5] = blackPawn_6;
-		pieces[6][6] = blackPawn_7;
-		pieces[6][7] = blackPawn_8;
+		pieces[0][0] = blackRook_1;
+		pieces[1][0] = blackKnight_1;
+		pieces[2][0] = blackBishop_1;
+		pieces[3][0] = blackQueen_1;
+		pieces[4][0] = blackKing_1;
+		pieces[5][0] = blackBishop_2;
+		pieces[6][0] = blackKnight_2;
+		pieces[7][0] = blackRook_2;
+		pieces[0][1] = blackPawn_1;
+		pieces[1][1] = blackPawn_2;
+		pieces[2][1] = blackPawn_3;
+		pieces[3][1] = blackPawn_4;
+		pieces[4][1] = blackPawn_5;
+		pieces[5][1] = blackPawn_6;
+		pieces[6][1] = blackPawn_7;
+		pieces[7][1] = blackPawn_8;
 		
 	
 		
@@ -238,8 +238,8 @@ public class ChessBoard extends Pane{
 			}
 		}
 		
-		for(int i = 0 ; i < 8; i++) {
-			getChildren().addAll(pieces[0][i].getImage(), pieces[1][i].getImage(), pieces[6][i].getImage(), pieces[7][i].getImage());
+		for(int i = 0 ; i < boardHeight; i++) {
+			getChildren().addAll(pieces[i][0].getImage(), pieces[i][1].getImage(), pieces[i][6].getImage(), pieces[i][7].getImage());
 		}
 		
 				
@@ -320,16 +320,16 @@ public class ChessBoard extends Pane{
 		cell_height = height / 8.0; //calculating the height of each tile on the chess board 
 		
 		//update the piece positions on the chess board
-		for(int i = 0; i < 8; i++) {
-			for(int j = 0; j < 8; j++){
+		for(int i = 0; i < boardWidth; i++) {
+			for(int j = 0; j < boardHeight; j++){
 				if(board[i][j] != 0) {//if tile is not supposed to be empty add appropriate piece
 					
-					pieces[i][j].relocate(j * cell_height, i * cell_width);
-					pieces[i][j].resize(cell_height, cell_width);
+					pieces[j][i].relocate(j * cell_height, i * cell_width);
+					pieces[j][i].resize(cell_height, cell_width);
 				}
 				
-				tiles[i][j].relocate(i * cell_width, j * cell_height);
-				tiles[i][j].resize(cell_width, cell_height);	
+				tiles[j][i].relocate(i * cell_width, j * cell_height);
+				tiles[j][i].resize(cell_width, cell_height);	
 			}
 		}
 		
@@ -337,6 +337,7 @@ public class ChessBoard extends Pane{
 	
 	
 	public void colorSquare(int x, int y, boolean selectedPiece) {
+		System.out.println("x: " + x + ",y: " + y);
 		// This function highlights the current position of the selected piece in green and available move positions in yellow
 		if(selectedPiece) {
 			tiles[x][y].highlightWindow(Color.YELLOW);
@@ -368,10 +369,13 @@ public class ChessBoard extends Pane{
 	}
 	
 	public void selectPiece(final double x, final double y) {
+		System.out.println("cell_width: " + cell_width + ", cell_height: " + cell_height);
 		int xIndex = (int) (x / cell_width);
 		int yIndex = (int) (y / cell_height);
 		
 		if(!check && !stalemate && !timer.timeOver) {
+			System.out.print("current_player: ");
+			System.out.println("xIndex: " + xIndex + ", yIndex: " + yIndex );
 			if(tiles[xIndex][yIndex].checkHighlight()) {
 				movePiece(x, y);
 				unhighlightWindow();

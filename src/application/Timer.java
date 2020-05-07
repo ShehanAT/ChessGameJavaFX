@@ -9,8 +9,8 @@ import javafx.util.Duration;
 import board.ChessBoard;
 
 public class Timer {
-	public int whiteTimer = 20;
-	public int blackTimer = 20;
+	public int whiteTimer = 400;
+	public int blackTimer = 400;
 	public int playerTurn = 0;
 	public boolean timeOver = false;
 	private ChessBoard chessBoard;

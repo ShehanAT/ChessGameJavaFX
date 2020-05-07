@@ -2,8 +2,8 @@ package pieces;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import application.GameLogic;
 import board.ChessBoard;
-
 public class Rook extends Piece{
 	private Image image;
 	public Rook(int type, int x, int y) {
@@ -31,7 +31,11 @@ public class Rook extends Piece{
 	@Override 
 	public void SelectPiece(ChessBoard chessBoard) {
 		chessBoard.colorSquare(this.xPos, this.yPos, true);
+		
 		if(chessBoard.check && !this.saviorPiece) {
+			return ;
+		}
+		if(gameLogic.slashDiagonalProtection(chessBoard, this.xPos, this.yPos, this.type)) {
 			return ;
 		}
 		if(gameLogic.slashDiagonalProtection(chessBoard, this.xPos, this.yPos, this.type) || gameLogic.backslashDiagonalProtection(chessBoard, this.xPos, this.yPos, this.type)) {

@@ -212,7 +212,7 @@ public class GameLogic {
 						break;
 					}
 					else if(chessBoard.getBoardPosition(x, y) == enemyType) {
-						if(chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook"){
+						if(chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Bishop"){
 							return true;
 						}
 						else
@@ -235,7 +235,7 @@ public class GameLogic {
 						break;
 					}
 					else if(chessBoard.getBoardPosition(x, y) == enemyType) {
-						if(chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook"){
+						if(chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Bishop"){
 							return true;
 						}
 						else
@@ -264,7 +264,7 @@ public class GameLogic {
 					if(chessBoard.getBoardPosition(x, y) == type)
 						break;
 					else if(chessBoard.getBoardPosition(x, y) == enemyType) {
-						if(chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook")
+						if(chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Bishop")
 							return true;
 						else 
 							break;
@@ -287,7 +287,7 @@ public class GameLogic {
 					if(chessBoard.getBoardPosition(x, y) == type)
 						break;
 					else if(chessBoard.getBoardPosition(x, y) == enemyType) {
-						if(chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook")
+						if(chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Bishop")
 							return true;
 						else 
 							break;
