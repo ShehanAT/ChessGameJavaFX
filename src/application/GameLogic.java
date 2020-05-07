@@ -73,7 +73,7 @@ public class GameLogic {
 //		if a stalemate has been detect by isOneKingStalement() or isLimitPieceStalement() 
 //		return true, else return false 
 		if(isOneKingStalemate(chessBoard, king, type) || isLimitPieceStalemate(chessBoard)) {
-			chessBoard.stalement = true;
+			chessBoard.stalemate = true;
 			return true;
 		}
 		return false;

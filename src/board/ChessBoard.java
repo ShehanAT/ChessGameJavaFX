@@ -74,7 +74,7 @@ public class ChessBoard extends Pane{
 	
 	public boolean check = false;
 	public boolean checkMate = false;
-	public boolean stalement = false;
+	public boolean stalemate = false;
 	
 	//GameLogic variables 
 	private GameLogic gameLogic = new GameLogic();
@@ -93,7 +93,6 @@ public class ChessBoard extends Pane{
 	public int playerTwoQueen = 1;
 	public int playerTwoPawn = 8;
 	private Alert alert;
-	
 	
 	
 	
@@ -246,6 +245,69 @@ public class ChessBoard extends Pane{
 				
 	}
 	
+	public void movePiece(final double x, final double y) {
+		int xIndex = (int) (x / cell_width);
+		int yIndex = (int) (y / cell_height);
+		
+		// check if player can move piece to (xIndex, yIndex)
+		selectedPiece.movePiece(this, xIndex, yIndex);
+		// firstTimeMove is now false 
+		selectedPiece.setFirstTimeMove(false);
+		// then change player 
+		if(current_player == white_player) {
+			current_player = black_player;
+			statusBar.whitePlayerAlert.setText("");
+			check = false;
+			for(Iterator<Piece> piece = saviorPieces.iterator(); piece.hasNext(); ) {
+				Piece item = piece.next();
+				item.saviorPiece = false;
+			}
+			if(gameLogic.isCheck(this, blackKing_1.xPos, blackKing_1.yPos, current_player, true)) {
+				checkPieces.clear();
+				saviorPieces.clear();
+				check = true;
+				gameLogic.findAllCheckPieces(this, blackKing_1.xPos, blackKing_1.yPos, current_player);
+				if(gameLogic.isCheckMate(this, blackKing_1.xPos, blackKing_1.yPos, current_player)) {
+					check = true;
+					statusBar.blackPlayerAlert.setText("Black player is in checkmate!");
+					statusBar.whitePlayerAlert.setText("White player wins!");
+				}else {
+					statusBar.blackPlayerAlert.setText("Black player is in check!");
+				}
+			}
+			else if(gameLogic.isStalemate(this, blackKing_1, current_player))
+				statusBar.winner.setText("Stalemate...");
+			else
+				statusBar.blackPlayerAlert.setText("Black Player turn");
+		}else {
+			current_player = white_player;
+			statusBar.blackPlayerAlert.setText("");
+			check = false;
+			for(Iterator<Piece> piece = saviorPieces.iterator(); piece.hasNext(); ) {
+				Piece item = piece.next();
+				item.saviorPiece = false;
+			}
+			if(gameLogic.isCheck(this, whiteKing_1.xPos, whiteKing_1.yPos, current_player, true)) {
+				checkPieces.clear();
+				saviorPieces.clear();
+				check = true;
+				gameLogic.findAllCheckPieces(this, whiteKing_1.xPos, whiteKing_1.yPos, current_player);
+				if(gameLogic.isCheckMate(this, whiteKing_1.xPos, whiteKing_1.yPos, current_player)) {
+					check = true;
+					statusBar.whitePlayerAlert.setText("White player is in checkmate!");
+					statusBar.blackPlayerAlert.setText("Black player wins!");
+				}else {
+					statusBar.whitePlayerAlert.setText("White player is in check!");
+				}
+			}
+			else if(gameLogic.isStalemate(this, whiteKing_1, current_player))
+				statusBar.winner.setText("Stalemate...");
+			else
+				statusBar.blackPlayerAlert.setText("White Player turn");
+		}
+		timer.playerTurn = current_player;
+	}
+	
 	@Override 
 	public void resize(double width, double height) {
 		//calling super class's resize method 
@@ -254,7 +316,6 @@ public class ChessBoard extends Pane{
 		background.setWidth(width);
 		background.setHeight(height);
 		
-		System.out.println("width: " + width + ", height: " + height);
 		cell_width = width / 8.0; //calculating the width of each tile on the chess board 
 		cell_height = height / 8.0; //calculating the height of each tile on the chess board 
 		
@@ -303,6 +364,28 @@ public class ChessBoard extends Pane{
 		else if(playerOutOfTime == 2) {
 			statusBar.setBlackPlayerAlertText("Black Player has run out of time!");
 			statusBar.setWhitePlayerAlertText("White Player has won!");
+		}
+	}
+	
+	public void selectPiece(final double x, final double y) {
+		int xIndex = (int) (x / cell_width);
+		int yIndex = (int) (y / cell_height);
+		
+		if(!check && !stalemate && !timer.timeOver) {
+			if(tiles[xIndex][yIndex].checkHighlight()) {
+				movePiece(x, y);
+				unhighlightWindow();
+				selectedPiece = null;
+			}
+			else {
+				if(board[xIndex][yIndex] == current_player) {
+					
+					unhighlightWindow();
+					pieces[xIndex][yIndex].SelectPiece(this);
+					selectedPiece = pieces[xIndex][yIndex];
+				}
+				
+			}
 		}
 	}
 	
@@ -364,6 +447,16 @@ public class ChessBoard extends Pane{
 			
 		}
 		
+	}
+	
+	public void unhighlightWindow() {
+		for(int y = 0; y < boardHeight; y++) {
+			for(int x = 0; x < boardWidth; x++) {
+				if(tiles[x][y].getTile().getStroke() != null) {
+					tiles[x][y].unHighlight();
+				}
+			}
+		}
 	}
 	
 	public int getBoardHeight() {

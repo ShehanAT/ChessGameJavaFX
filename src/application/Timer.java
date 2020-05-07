@@ -22,12 +22,12 @@ public class Timer {
 	public Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 		@Override 
 		public void handle(ActionEvent event) {
-			if(playerTurn == 1 && !timeOver && !chessBoard.checkMate && !chessBoard.stalement) {
+			if(playerTurn == 1 && !timeOver && !chessBoard.checkMate && !chessBoard.stalemate) {
 				whiteTimer -= 1;
 				chessBoard.getStatusBar().setWhitePlayerTimerText(TimeUnit.SECONDS.toMinutes(whiteTimer) + ":" + (whiteTimer % 60));
 				
 			}
-			else if(playerTurn == 2 && !timeOver && !chessBoard.checkMate && !chessBoard.stalement) {
+			else if(playerTurn == 2 && !timeOver && !chessBoard.checkMate && !chessBoard.stalemate) {
 				blackTimer -= 1;
 				chessBoard.getStatusBar().setBlackPlayerTimerText(TimeUnit.SECONDS.toMinutes(blackTimer) + ":" + (blackTimer % 60));
 			}

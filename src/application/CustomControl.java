@@ -20,6 +20,16 @@ public class CustomControl extends Control {
 		statusBarSize = 80; // this is the height of the statusBar
 		chessBoard = new ChessBoard(statusBar);
 		getChildren().addAll(statusBar, chessBoard);
+		
+		setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				
+				chessBoard.selectPiece(event.getX(), event.getY() - (statusBarSize / 2));
+			}
+		});
+		
+	
 	}
 	
 	public void resize(double width, double height) {
