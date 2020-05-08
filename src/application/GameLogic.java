@@ -205,6 +205,7 @@ public class GameLogic {
 		//check for protecting piece on the diagonal up direction of the king
 		int y = yPos - 1;
 		for(int x = xPos + 1; x < chessBoard.getBoardWidth() && y >= 0; x++, y--) {
+			System.out.println(chessBoard.getBoardPosition(x, y));
 			if(chessBoard.getBoardPosition(x, y) == type && chessBoard.getPiece(x, y).name == "King") {
 				y = yPos + 1;
 				for(x = xPos - 1; x >= 0 && y < chessBoard.getBoardHeight(); x--, y++) {

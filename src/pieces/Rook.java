@@ -35,9 +35,10 @@ public class Rook extends Piece{
 		if(chessBoard.check && !this.saviorPiece) {
 			return ;
 		}
+		
 		if(gameLogic.slashDiagonalProtection(chessBoard, this.xPos, this.yPos, this.type)) {
 			return ;
-		}
+		} 
 		if(gameLogic.slashDiagonalProtection(chessBoard, this.xPos, this.yPos, this.type) || gameLogic.backslashDiagonalProtection(chessBoard, this.xPos, this.yPos, this.type)) {
 			return ;
 		}

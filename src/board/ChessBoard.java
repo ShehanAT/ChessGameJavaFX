@@ -116,9 +116,9 @@ public class ChessBoard extends Pane{
 		
 		for(int i = 0 ; i < 8 ; i++) {
 			if(i%2 == 0 || i == 0) 
-				blackTile = true;
-			else
 				blackTile = false;
+			else
+				blackTile = true;
 			for(int j = 0 ; j < 8 ; j++) { //bug with blackTile
 				board[i][j] = empty_tile;
 				if(blackTile) {
@@ -133,9 +133,8 @@ public class ChessBoard extends Pane{
 			}
 			
 		}
-		
-		initPiece();
 		current_player = white_player;
+		initPiece();
 		timer = new Timer(this); // set the timer
 		timer.timeline.setCycleCount(Timeline.INDEFINITE); // cause the timer to repeat indefinitely 
 		timer.timeline.play();
@@ -227,13 +226,13 @@ public class ChessBoard extends Pane{
 		for(int i = 0 ; i < boardWidth; i++) { // columns
 			for(int j = 0; j < boardHeight; j++) { // rows
 				if(i == 0 || i == 1) {
-					board[i][j] = 1; //indicate this is a white piece
+					board[j][i] = 2; //indicate this is a white piece
 				}
 				else if(i == 6 || i == 7) {
-					board[i][j] = 2; //indicate this is a black piece
+					board[j][i] = 1; //indicate this is a black piece
 				}
 				else {
-					board[i][j] = 0; //indicate this is a unoccupied piece
+					board[j][i] = 0; //indicate this is a unoccupied piece
 				}
 			}
 		}
@@ -324,12 +323,12 @@ public class ChessBoard extends Pane{
 			for(int j = 0; j < boardHeight; j++){
 				if(board[i][j] != 0) {//if tile is not supposed to be empty add appropriate piece
 					
-					pieces[j][i].relocate(j * cell_height, i * cell_width);
-					pieces[j][i].resize(cell_height, cell_width);
+					pieces[i][j].relocate(i * cell_height, j * cell_width);
+					pieces[i][j].resize(cell_height, cell_width);
 				}
 				
-				tiles[j][i].relocate(i * cell_width, j * cell_height);
-				tiles[j][i].resize(cell_width, cell_height);	
+				tiles[i][j].relocate(i * cell_width, j * cell_height);
+				tiles[i][j].resize(cell_width, cell_height);	
 			}
 		}
 		
@@ -472,7 +471,7 @@ public class ChessBoard extends Pane{
 	}
 	
 	public int getBoardPosition(int x, int y) {
-		return this.board[x][y];
+		return (this.board[x][y]);
 	}
 	
 	public void setBoard(int x, int y, int type) {
@@ -484,7 +483,7 @@ public class ChessBoard extends Pane{
 	}
 	
 	public Piece getPiece(int x, int y) {
-		return pieces[x][y];
+		return (pieces[x][y]);
 	}
 	
 	public Piece getKing(int type) {

@@ -45,6 +45,7 @@ public class Tile extends Group{
 		if(color == Color.GREEN) {
 			isHighlight = true;
 		}
+		
 	}
 	
 	public void unHighlight() {

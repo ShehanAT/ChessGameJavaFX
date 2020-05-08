@@ -13,7 +13,7 @@ public abstract class Piece extends Group{
 	public String name; //name of piece
 	protected ImageView imageView = new ImageView(); //image of the piece 
 	protected Translate pos;
-	protected GameLogic gameLogic;
+	protected GameLogic gameLogic = new GameLogic();
 	public boolean firstTimeMove; //to check if the piece has been used before 
 	public boolean saviorPiece; //to check if piece can be moved when in check situation
 	
