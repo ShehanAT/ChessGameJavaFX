@@ -39,7 +39,7 @@ public class Tile extends Group{
 
 	
 	public void highlightWindow(Color color) {
-		tile.setStrokeType(StrokeType.CENTERED);
+		tile.setStrokeType(StrokeType.INSIDE);
 		tile.setStrokeWidth(10);
 		tile.setStroke(color);
 		if(color == Color.GREEN) {
@@ -50,6 +50,7 @@ public class Tile extends Group{
 	
 	public void unHighlight() {
 		tile.setStrokeType(null);
+		tile.setStroke(null);
 		isHighlight = false;
 	}
 	

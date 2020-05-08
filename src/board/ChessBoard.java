@@ -336,7 +336,6 @@ public class ChessBoard extends Pane{
 	
 	
 	public void colorSquare(int x, int y, boolean selectedPiece) {
-		System.out.println("x: " + x + ",y: " + y);
 		// This function highlights the current position of the selected piece in green and available move positions in yellow
 		if(selectedPiece) {
 			tiles[x][y].highlightWindow(Color.YELLOW);
@@ -368,13 +367,10 @@ public class ChessBoard extends Pane{
 	}
 	
 	public void selectPiece(final double x, final double y) {
-		System.out.println("cell_width: " + cell_width + ", cell_height: " + cell_height);
 		int xIndex = (int) (x / cell_width);
 		int yIndex = (int) (y / cell_height);
 		
 		if(!check && !stalemate && !timer.timeOver) {
-			System.out.print("current_player: ");
-			System.out.println("xIndex: " + xIndex + ", yIndex: " + yIndex );
 			if(tiles[xIndex][yIndex].checkHighlight()) {
 				movePiece(x, y);
 				unhighlightWindow();
@@ -447,6 +443,14 @@ public class ChessBoard extends Pane{
 				}
 		}
 		else if(result.get() == buttonKnight) {
+			promotedPiece = new Knight(piece.type, piece.xPos, piece.yPos);
+			getChildren().remove(piece.getImage());
+			getChildren().add(promotedPiece.getImage());
+			pieces[piece.xPos][piece.yPos] = promotedPiece;
+			if(piece.type == 1) 
+				playerOneKnight++;
+			else
+				playerTwoKnight++;
 			
 		}
 		
@@ -471,7 +475,7 @@ public class ChessBoard extends Pane{
 	}
 	
 	public int getBoardPosition(int x, int y) {
-		return (this.board[x][y]);
+		return this.board[x][y];
 	}
 	
 	public void setBoard(int x, int y, int type) {
@@ -483,7 +487,7 @@ public class ChessBoard extends Pane{
 	}
 	
 	public Piece getPiece(int x, int y) {
-		return (pieces[x][y]);
+		return pieces[x][y];
 	}
 	
 	public Piece getKing(int type) {
