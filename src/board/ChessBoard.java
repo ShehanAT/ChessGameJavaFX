@@ -207,8 +207,8 @@ public class ChessBoard extends Pane{
 		pieces[0][0] = blackRook_1;
 		pieces[1][0] = blackKnight_1;
 		pieces[2][0] = blackBishop_1;
-		pieces[3][0] = blackQueen_1;
-		pieces[4][0] = blackKing_1;
+		pieces[3][0] = blackKing_1;
+		pieces[4][0] = blackQueen_1;
 		pieces[5][0] = blackBishop_2;
 		pieces[6][0] = blackKnight_2;
 		pieces[7][0] = blackRook_2;
@@ -370,7 +370,7 @@ public class ChessBoard extends Pane{
 		int xIndex = (int) (x / cell_width);
 		int yIndex = (int) (y / cell_height);
 		
-		if(!check && !stalemate && !timer.timeOver) {
+		if(!this.checkMate && !this.stalemate && !this.timer.timeOver) {
 			if(tiles[xIndex][yIndex].checkHighlight()) {
 				movePiece(x, y);
 				unhighlightWindow();

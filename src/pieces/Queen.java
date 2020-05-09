@@ -30,9 +30,9 @@ public class Queen extends Piece{
 	
 	@Override 
 	public void SelectPiece(ChessBoard chessBoard) {
-		chessBoard.colorSquare(xPos, yPos, true);
+		chessBoard.colorSquare(this.xPos, this.yPos, true);
 		// bishop's moveset
-		int y = yPos + 1;
+		int y = this.yPos + 1;
 		if(chessBoard.check && !this.saviorPiece) {
 			return ;
 		}

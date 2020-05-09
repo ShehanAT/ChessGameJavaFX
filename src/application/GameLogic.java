@@ -555,7 +555,7 @@ public class GameLogic {
 			else if(chessBoard.getBoardPosition(x, y) == enemyType) {
 				if(y == yPos + 1 && chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (type == 2 && chessBoard.getPiece(x, y).name == "Pawn"))
 					chessBoard.checkPieces.add(chessBoard.getPiece(x, y));
-				else if(chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Bishop"))
+				if(chessBoard.getBoardPosition(x, y) != 0  && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Bishop"))
 					chessBoard.checkPieces.add(chessBoard.getPiece(x, y));
 				else
 					break;
@@ -566,7 +566,7 @@ public class GameLogic {
 		for(y = -2; y <= 2; y++) {
 			if(y != 0) {
 				x = y % 2 == 0? 1 : 2;
-				if(yPos + y >= 0 && yPos + y < chessBoard.getBoardHeight() && xPos + x >= 0 && xPos + x < chessBoard.getBoardWidth() && chessBoard.getBoardPosition(xPos - x, yPos + y) != type && chessBoard.getBoardPosition(xPos - x, yPos + y) != 0)
+				if(yPos + y >= 0 && yPos + y < chessBoard.getBoardHeight() && xPos - x >= 0 && xPos - x < chessBoard.getBoardWidth() && chessBoard.getBoardPosition(xPos - x, yPos + y) != type && chessBoard.getBoardPosition(xPos - x, yPos + y) != 0)
 					if(chessBoard.getPiece(xPos - x, yPos + y) != null && chessBoard.getPiece(xPos - x, yPos + y).name == "Knight")
 						chessBoard.checkPieces.add(chessBoard.getPiece(xPos - x, yPos + y));
 				if(yPos + y >= 0 && yPos + y < chessBoard.getBoardHeight() && xPos + x >= 0 && xPos + x < chessBoard.getBoardWidth() && chessBoard.getBoardPosition(xPos + x, yPos + y) != type && chessBoard.getBoardPosition(xPos + x, yPos + y) != 0)
@@ -578,6 +578,7 @@ public class GameLogic {
 	
 	
 	public void findAllSaviorPieces(ChessBoard chessBoard, int xPos, int yPos, int type, boolean protect) {
+		 
 		int y = 0;
 		int x = 0;
 		int enemyType = 0;
@@ -635,9 +636,9 @@ public class GameLogic {
 		
 		//checking vertical down
 		for(y = yPos + 1; y < chessBoard.getBoardHeight(); y++) {
-			if(chessBoard.getBoardPosition(x, yPos) == type)
+			if(chessBoard.getBoardPosition(xPos, y) == type)
 				break;
-			else if(chessBoard.getBoardPosition(x, yPos) == enemyType) {
+			else if(chessBoard.getBoardPosition(xPos, y) == enemyType) {
 				if(enemyType == 1 && protect && y == yPos + 1 && chessBoard.getPiece(xPos, y) != null && chessBoard.getPiece(xPos, y).name == "Pawn") {
 					chessBoard.saviorPieces.add(chessBoard.getPiece(xPos, y));
 				}
@@ -647,22 +648,22 @@ public class GameLogic {
 				if(chessBoard.getPiece(xPos, y) != null && (chessBoard.getPiece(xPos, y).name == "Queen" || chessBoard.getPiece(xPos, y).name == "Rook")) {
 					chessBoard.saviorPieces.add(chessBoard.getPiece(xPos, y));
 				}
-				else {
+				else 
 					break;
-				}
+				
 			}
 			
 		}
 		
 		//diagonal 1/up
-		for(x = xPos - 1, y = yPos - 1; x >= 0 && y >= 00 ; x--, y--) {
+		for(y = yPos - 1, x = xPos - 1; x >= 0 && y >= 0 ; x--, y--) {
 			if(chessBoard.getBoardPosition(x, y) == type)
 				break;
 			else if(chessBoard.getBoardPosition(x, y) == enemyType) {
 				if(protect == false && y == yPos - 1 && chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (type == 1 && chessBoard.getPiece(x, y).name == "Pawn")) {
 					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
 				}
-				if(chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook")) {
+				if(chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Bishop")) {
 					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
 				}
 				else
@@ -670,15 +671,15 @@ public class GameLogic {
 			}
 		}
 		
-		//diagonal 1/up
-		for(x = xPos + 1, y = yPos + 1; x < chessBoard.getBoardWidth() && y < chessBoard.getBoardHeight(); x++, y++) {
+		//diagonal 1/down
+		for(y = yPos + 1, x = xPos + 1; x < chessBoard.getBoardWidth() && y < chessBoard.getBoardHeight(); x++, y++) {
 			if(chessBoard.getBoardPosition(x, y) == type)
 				break;
 			else if(chessBoard.getBoardPosition(x, y) == enemyType) {
 				if(protect == false && y == yPos + 1 &&  chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (type == 2 && chessBoard.getPiece(x, y).name == "Pawn")) {
 					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
 				}
-				if(chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook")) {
+				if(chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Bishop")) {
 					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
 				}
 				else
@@ -694,7 +695,7 @@ public class GameLogic {
 				if(protect == false && y == yPos - 1 && chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (type == 1 && chessBoard.getPiece(x, y).name == "Pawn")) {
 					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
 				}
-				if(chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook")) {
+				if(chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Bishop")) {
 					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
 				}
 				else
@@ -710,7 +711,7 @@ public class GameLogic {
 				if(protect == false && y == yPos + 1 && chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (type == 2 && chessBoard.getPiece(x, y).name == "Pawn")) {
 					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
 				}
-				if(chessBoard.getBoardPosition(x, y) != 0 && chessBoard.getPiece(x, y) != null && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Rook")) {
+				if(chessBoard.getBoardPosition(x, y) != 0 && (chessBoard.getPiece(x, y).name == "Queen" || chessBoard.getPiece(x, y).name == "Bishop")) {
 					chessBoard.saviorPieces.add(chessBoard.getPiece(x, y));
 				}
 				else
@@ -722,12 +723,12 @@ public class GameLogic {
 		for(y = -2; y <= 2; y++) {
 			if(y != 0) {
 				x = y % 2 == 0 ? 1 : 2;
-				if(y + yPos >= 0 && yPos + y > chessBoard.getBoardHeight() && xPos - x >= 0 && xPos - x < chessBoard.getBoardWidth() && chessBoard.getBoardPosition(xPos - x, yPos + y) != type && chessBoard.getBoardPosition(xPos - x, yPos + y) != 0) {
+				if(y + yPos >= 0 && yPos + y < chessBoard.getBoardHeight() && xPos - x >= 0 && xPos - x < chessBoard.getBoardWidth() && chessBoard.getBoardPosition(xPos - x, yPos + y) != type && chessBoard.getBoardPosition(xPos - x, yPos + y) != 0) {
 					if(chessBoard.getPiece(xPos - x, yPos + y) != null && chessBoard.getPiece(xPos - x, yPos + y).name == "Knight") {
 						chessBoard.saviorPieces.add(chessBoard.getPiece(xPos - x, yPos + y));
 					}
 				}
-				if(y + yPos >= 0 && yPos + y > chessBoard.getBoardHeight() && xPos + x >= 0 && xPos + x < chessBoard.getBoardWidth() && chessBoard.getBoardPosition(xPos + x, yPos + y) != type && chessBoard.getBoardPosition(xPos + x, yPos + y) != 0) {
+				if(y + yPos >= 0 && yPos + y < chessBoard.getBoardHeight() && xPos + x >= 0 && xPos + x < chessBoard.getBoardWidth() && chessBoard.getBoardPosition(xPos + x, yPos + y) != type && chessBoard.getBoardPosition(xPos + x, yPos + y) != 0) {
 					if(chessBoard.getPiece(xPos + x, yPos + y) != null && chessBoard.getPiece(xPos + x, yPos + y).name == "Knight") {
 						chessBoard.saviorPieces.add(chessBoard.getPiece(xPos + x, yPos + y));
 					}
@@ -738,13 +739,13 @@ public class GameLogic {
 	}
 	
 	public void canCapture(ChessBoard chessBoard, Piece checkPiece) {
-		findAllSaviorPieces(chessBoard, checkPiece.xPos, checkPiece.yPos, checkPiece.type, true);
+		findAllSaviorPieces(chessBoard, checkPiece.xPos, checkPiece.yPos, checkPiece.type, false);
 	}
 	
 	public boolean isCheckMate(ChessBoard chessBoard, int xPos, int yPos, int type) {
 		boolean checkMate = true;
-		int y = 0;
-		int x = 0;
+		int y = yPos;
+		int x = xPos;
 		for(y = yPos - 1; y <= yPos + 1; y++) {
 			for(x = xPos - 1; x <= xPos + 1; x++) {
 				if(y >= 0 && y < chessBoard.getBoardHeight() && x >= 0 && x < chessBoard.getBoardWidth() && chessBoard.getBoardPosition(x,  y) != type) {
