@@ -28,6 +28,24 @@ public class CustomControl extends Control {
 			}
 		});
 		
+		// if space bar is pressed the game will reset
+		setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override 
+			public void handle(KeyEvent event) {
+				if(event.getCode() == KeyCode.SPACE) {
+					chessBoard.resetGame();
+				}
+			}
+		});
+		
+		statusBar.getResetButton().setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				chessBoard.resetGame();
+			}
+		});
+		
+		
 	
 	}
 	

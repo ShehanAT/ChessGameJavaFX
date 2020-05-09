@@ -466,6 +466,55 @@ public class ChessBoard extends Pane{
 		}
 	}
 	
+	public void resetGame() {
+		timer.playerTurn = 0;
+		for(int x = 0; x < 8; x++) {
+			for(int y = 0; y < 8; y++) {
+				board[x][y] = 0;
+				if(pieces[x][y] != null)
+					getChildren().remove(pieces[x][y].getImage());
+				getChildren().remove(pieces[x][y]);
+				pieces[x][y] = null;
+			}
+		}
+		current_player = white_player;
+		initPiece();
+		for(int i = 0; i < 8; i++) {
+			pieces[i][0].resetPiece();
+			pieces[i][1].resetPiece();
+			pieces[i][6].resetPiece();
+			pieces[i][7].resetPiece();
+		}
+		unhighlightWindow();
+		statusBar.whitePlayerAlert.setText("White Player turn");
+		statusBar.blackPlayerAlert.setText("");
+		statusBar.whitePlayerTimer.setText("15:00");
+		statusBar.blackPlayerTimer.setText("15:00");
+		statusBar.winner.setText("");
+		checkMate  = false;
+		check = false;
+		stalemate = false;
+		selectedPiece = null;
+		playerOneRook = 2;
+		playerOneBishopLightSquare = 1;
+		playerOneBishopDarkSquare = 1;
+		playerOneKnight = 2;
+		playerOneQueen = 1;
+		playerOnePawn = 8;
+		playerTwoRook = 2;
+		playerTwoBishopLightSquare = 1;
+		playerTwoBishopDarkSquare = 1;
+		playerTwoKnight = 2;
+		playerTwoQueen = 1;
+		checkPieces.clear();
+		saviorPieces.clear();
+		timer.timeOver = false;
+		timer.whiteTimer = 900;
+		timer.blackTimer = 900;
+		timer.playerTurn = current_player;
+		timer.timeline.play();
+	}
+	
 	public int getBoardHeight() {
 		return this.boardHeight;
 	}

@@ -179,6 +179,11 @@ public abstract class Piece extends Group{
 		chessBoard.getChildren().remove(this.getImage());
 	}
 	
+	public void resetPiece() {
+		this.firstTimeMove = true;
+		this.saviorPiece = false;
+	}
+	
 	public int canCastle(ChessBoard chessBoard) {
 		return 0;
 	}
