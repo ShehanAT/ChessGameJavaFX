@@ -29,7 +29,7 @@ public class Pawn extends Piece{
 	@Override
 	public void SelectPiece(ChessBoard chessBoard) {
 		chessBoard.colorSquare(xPos, yPos, true);
-		if(chessBoard.check) {
+		if(chessBoard.check && !this.saviorPiece) {
 			return ;
 		}
 		if(gameLogic.horizontalProtection(chessBoard, this.xPos, this.yPos, this.type))
@@ -96,23 +96,23 @@ public class Pawn extends Piece{
 					}
 				}
 				if(!gameLogic.verticalProtection(chessBoard, this.xPos, this.yPos, this.type)) {
-					if(!gameLogic.slashDiagonalProtection(chessBoard, this.xPos, this.yPos, this.type)) {
-						if(this.yPos + 1 < chessBoard.getBoardHeight() && this.xPos + 1 >= 0 && chessBoard.getBoardPosition(this.xPos + 1, this.yPos + 1) != this.type && chessBoard.getBoardPosition(this.xPos + 1, this.yPos + 1) != 0) {
-							if(chessBoard.check) {
-								if(gameLogic.isThisProtecting(chessBoard, this.xPos + 1, this.yPos + 1, this.type))
-									chessBoard.colorSquare(this.xPos + 1, this.yPos + 1, false);
-							}else {
-								chessBoard.colorSquare(this.xPos + 1, this.yPos + 1, false);
-							}
-						}
-					}
 					if(!gameLogic.backslashDiagonalProtection(chessBoard, this.xPos, this.yPos, this.type)) {
-						if(this.yPos + 1 < chessBoard.getBoardHeight() && this.xPos - 1 < chessBoard.getBoardWidth() && chessBoard.getBoardPosition(this.xPos - 1, this.yPos + 1) != this.type && chessBoard.getBoardPosition(this.xPos - 1, this.yPos + 1) != 0) {
+						if(this.yPos + 1 < chessBoard.getBoardHeight() && this.xPos - 1 >= 0 && chessBoard.getBoardPosition(this.xPos - 1, this.yPos + 1) != this.type && chessBoard.getBoardPosition(this.xPos - 1, this.yPos + 1) != 0) {
 							if(chessBoard.check) {
 								if(gameLogic.isThisProtecting(chessBoard, this.xPos - 1, this.yPos + 1, this.type))
 									chessBoard.colorSquare(this.xPos - 1, this.yPos + 1, false);
 							}else {
 								chessBoard.colorSquare(this.xPos - 1, this.yPos + 1, false);
+							}
+						}
+					}
+					if(!gameLogic.slashDiagonalProtection(chessBoard, this.xPos, this.yPos, this.type)) {
+						if(this.yPos + 1 < chessBoard.getBoardHeight() && this.xPos + 1 < chessBoard.getBoardWidth() && chessBoard.getBoardPosition(this.xPos + 1, this.yPos + 1) != this.type && chessBoard.getBoardPosition(this.xPos + 1, this.yPos + 1) != 0) {
+							if(chessBoard.check) {
+								if(gameLogic.isThisProtecting(chessBoard, this.xPos + 1, this.yPos + 1, this.type))
+									chessBoard.colorSquare(this.xPos + 1, this.yPos + 1, false);
+							}else {
+								chessBoard.colorSquare(this.xPos + 1, this.yPos + 1, false);
 							}
 						}
 					}

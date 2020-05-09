@@ -277,7 +277,7 @@ public class ChessBoard extends Pane{
 			else if(gameLogic.isStalemate(this, blackKing_1, current_player))
 				statusBar.winner.setText("Stalemate...");
 			else
-				statusBar.blackPlayerAlert.setText("Black Player turn");
+				statusBar.blackPlayerAlert.setText("Black Player's turn");
 		}else {
 			current_player = white_player;
 			statusBar.blackPlayerAlert.setText("");
@@ -302,7 +302,7 @@ public class ChessBoard extends Pane{
 			else if(gameLogic.isStalemate(this, whiteKing_1, current_player))
 				statusBar.winner.setText("Stalemate...");
 			else
-				statusBar.blackPlayerAlert.setText("White Player turn");
+				statusBar.whitePlayerAlert.setText("White Player's turn");
 		}
 		timer.playerTurn = current_player;
 	}

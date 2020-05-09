@@ -9,8 +9,8 @@ import javafx.util.Duration;
 import board.ChessBoard;
 
 public class Timer {
-	public int whiteTimer = 400;
-	public int blackTimer = 400;
+	public int whiteTimer = 900;
+	public int blackTimer = 900;
 	public int playerTurn = 0;
 	public boolean timeOver = false;
 	private ChessBoard chessBoard;
@@ -27,7 +27,7 @@ public class Timer {
 				chessBoard.getStatusBar().setWhitePlayerTimerText(TimeUnit.SECONDS.toMinutes(whiteTimer) + ":" + (whiteTimer % 60));
 				
 			}
-			else if(playerTurn == 2 && !timeOver && !chessBoard.checkMate && !chessBoard.stalemate) {
+			else if(playerTurn == 2 && !timeOver) {
 				blackTimer -= 1;
 				chessBoard.getStatusBar().setBlackPlayerTimerText(TimeUnit.SECONDS.toMinutes(blackTimer) + ":" + (blackTimer % 60));
 			}

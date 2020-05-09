@@ -21,7 +21,7 @@ public abstract class Piece extends Group{
 		this.type = type; 
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.firstTimeMove = firstTimeMove;
+		this.firstTimeMove = true;
 	}
 	
 	public void resize(double width, double height) {

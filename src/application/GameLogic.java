@@ -166,6 +166,7 @@ public class GameLogic {
 			else if(chessBoard.getBoardPosition(x, yPos) != 0) {
 				break;
 			}
+		}
 			
 			//check to the horizontal right of the king
 			for(x = xPos + 1; x < chessBoard.getBoardWidth(); x++) {
@@ -189,7 +190,6 @@ public class GameLogic {
 					break;
 				}
 			}
-		}
 		return false;
 	}
 	
@@ -614,9 +614,9 @@ public class GameLogic {
 		
 		//checking vertical up 
 		for(y = yPos - 1; y >= 0; y--) {
-			if(chessBoard.getBoardPosition(x, yPos) == type)
+			if(chessBoard.getBoardPosition(xPos, y) == type)
 				break;
-			else if(chessBoard.getBoardPosition(x, yPos) == enemyType) {
+			else if(chessBoard.getBoardPosition(xPos, y) == enemyType) {
 				if(enemyType == 2 && protect && y == yPos - 1 && chessBoard.getPiece(xPos, y) != null && chessBoard.getPiece(xPos, y).name == "Pawn") {
 					chessBoard.saviorPieces.add(chessBoard.getPiece(xPos, y));
 				}
@@ -626,9 +626,9 @@ public class GameLogic {
 				if(chessBoard.getPiece(xPos, y) != null && (chessBoard.getPiece(xPos, y).name == "Queen" || chessBoard.getPiece(xPos, y).name == "Rook")) {
 					chessBoard.saviorPieces.add(chessBoard.getPiece(xPos, y));
 				}
-				else {
+				else 
 					break;
-				}
+				
 			}
 			
 		}
