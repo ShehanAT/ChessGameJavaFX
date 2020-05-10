@@ -14,8 +14,8 @@ public class Main extends Application {
 		try {
 			primaryStage.setTitle("Chess Game");
 			primaryStage.setScene(new Scene(mainLayout, 600, 700));
-			primaryStage.setWidth(600);
-			primaryStage.setHeight(700);
+			primaryStage.setMinWidth(300);
+			primaryStage.setMinHeight(300);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

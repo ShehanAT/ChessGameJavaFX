@@ -45,7 +45,7 @@ public abstract class Piece extends Group{
 			double ratioY = imageView.getFitHeight() / img.getHeight();
 			
 			double reduceCoeff = 0;
-			if(ratioX <= ratioY) {
+			if(ratioX >= ratioY) {
 				reduceCoeff = ratioY;
 			}else {
 				reduceCoeff = ratioX;

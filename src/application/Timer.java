@@ -24,12 +24,18 @@ public class Timer {
 		public void handle(ActionEvent event) {
 			if(playerTurn == 1 && !timeOver && !chessBoard.checkMate && !chessBoard.stalemate) {
 				whiteTimer -= 1;
-				chessBoard.getStatusBar().setWhitePlayerTimerText(TimeUnit.SECONDS.toMinutes(whiteTimer) + ":" + (whiteTimer % 60));
+				String seconds =  String.valueOf(whiteTimer % 60);
+				if(seconds.length() < 2)
+					seconds = "0" + seconds;
+				chessBoard.getStatusBar().setWhitePlayerTimerText(TimeUnit.SECONDS.toMinutes(whiteTimer) + ":" + seconds);
 				
 			}
 			else if(playerTurn == 2 && !timeOver) {
 				blackTimer -= 1;
-				chessBoard.getStatusBar().setBlackPlayerTimerText(TimeUnit.SECONDS.toMinutes(blackTimer) + ":" + (blackTimer % 60));
+				String seconds =  String.valueOf(blackTimer % 60);
+				if(seconds.length() < 2)
+					seconds = "0" + seconds;
+				chessBoard.getStatusBar().setBlackPlayerTimerText(TimeUnit.SECONDS.toMinutes(blackTimer) + ":" + seconds);
 			}
 			if(!timeOver && (whiteTimer == 0 || blackTimer == 0)) { // if playerTurn is 0 
 				chessBoard.timerOver(playerTurn);

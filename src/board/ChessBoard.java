@@ -341,8 +341,8 @@ public class ChessBoard extends Pane{
 			for(int j = 0; j < boardHeight; j++){
 				if(board[i][j] != 0) {//if tile is not supposed to be empty add appropriate piece
 					
-					pieces[i][j].relocate(i * cell_height, j * cell_width);
-					pieces[i][j].resize(cell_height, cell_width);
+					pieces[i][j].relocate(i * cell_width, j * cell_height);
+					pieces[i][j].resize(cell_width, cell_height);
 				}
 				
 				tiles[i][j].relocate(i * cell_width, j * cell_height);

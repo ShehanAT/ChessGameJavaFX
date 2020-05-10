@@ -41,7 +41,7 @@ public class StatusBar extends HBox{
 		column = new ColumnConstraints();
 		column.setPercentWidth(30);
 		statusBarGridPane.getColumnConstraints().add(column);
-		statusBarGridPane.setPrefSize(2000, 100);
+		statusBarGridPane.setPrefSize(2000, 100);// width set to 2000px to cover most screens under 2000px wide 
 		RowConstraints row = new RowConstraints();;
 		statusBarGridPane.getRowConstraints().add(row);
 		row = new RowConstraints();
