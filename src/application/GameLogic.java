@@ -807,7 +807,7 @@ public class GameLogic {
 		
 		//check for horizontal right threat
 		if(xPos < checkPiece.xPos && yPos == checkPiece.yPos) {
-			for(int x = checkPiece.xPos - 1; x < xPos; x--) {
+			for(int x = checkPiece.xPos - 1; x > xPos; x--) {
 				findAllSaviorPieces(chessBoard, x, checkPiece.yPos, checkPiece.type, true);
 			}
 		}
@@ -815,7 +815,7 @@ public class GameLogic {
 		//diagonal 1/up threat
 		int y = checkPiece.yPos + 1;
 		if(xPos > checkPiece.xPos && yPos > checkPiece.yPos) {
-			for(int x = checkPiece.xPos - 1; x < xPos && y < yPos; x++, y++) {
+			for(int x = checkPiece.xPos + 1; x < xPos && y < yPos; x++, y++) {
 				findAllSaviorPieces(chessBoard, x, y, checkPiece.type, true);
 			}
 		}
@@ -831,7 +831,7 @@ public class GameLogic {
 		//diagonal 2/up threat
 		y = checkPiece.yPos + 1;
 		if(xPos < checkPiece.xPos && yPos > checkPiece.yPos) {
-			for(int x = checkPiece.xPos - 1; x > xPos && y > yPos; x--, y--){
+			for(int x = checkPiece.xPos - 1; x > xPos && y < yPos; x--, y++){
 				findAllSaviorPieces(chessBoard, x, y, checkPiece.type, true);
 			}
 		}

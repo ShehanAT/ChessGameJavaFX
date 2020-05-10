@@ -1,6 +1,8 @@
 package board;
 
 import java.util.ArrayList;
+import java.io.File;
+import javafx.scene.media.*;
 import application.GameLogic;
 import application.Timer;
 import javafx.scene.transform.Rotate;
@@ -95,6 +97,10 @@ public class ChessBoard extends Pane{
 	private Alert alert;
 	
 	
+	//in game sounds 
+	String chessMoveSound = "src/resources/chessMoveSound.wav";
+	String checkSound = "src/resources/checkSound.wav";
+	String checkMateSound = "src/resources/checkMateSound.wav";
 	
 	public ChessBoard(StatusBar newStatusBar) {
 		
@@ -268,9 +274,15 @@ public class ChessBoard extends Pane{
 				gameLogic.findAllCheckPieces(this, blackKing_1.xPos, blackKing_1.yPos, current_player);
 				if(gameLogic.isCheckMate(this, blackKing_1.xPos, blackKing_1.yPos, current_player)) {
 					check = true;
+					Media checkMateMedia = new Media(new File(checkMateSound).toURI().toString());
+					MediaPlayer checkMatePlayer = new MediaPlayer(checkMateMedia);
+					checkMatePlayer.play();
 					statusBar.blackPlayerAlert.setText("Black player is in checkmate!");
 					statusBar.whitePlayerAlert.setText("White player wins!");
 				}else {
+					Media checkSoundMedia = new Media(new File(checkSound).toURI().toString());
+					MediaPlayer checkMovePlayer = new MediaPlayer(checkSoundMedia);
+					checkMovePlayer.play();
 					statusBar.blackPlayerAlert.setText("Black player is in check!");
 				}
 			}
@@ -293,9 +305,15 @@ public class ChessBoard extends Pane{
 				gameLogic.findAllCheckPieces(this, whiteKing_1.xPos, whiteKing_1.yPos, current_player);
 				if(gameLogic.isCheckMate(this, whiteKing_1.xPos, whiteKing_1.yPos, current_player)) {
 					check = true;
+					Media checkMateMedia = new Media(new File(checkMateSound).toURI().toString());
+					MediaPlayer checkMatePlayer = new MediaPlayer(checkMateMedia);
+					checkMatePlayer.play();
 					statusBar.whitePlayerAlert.setText("White player is in checkmate!");
 					statusBar.blackPlayerAlert.setText("Black player wins!");
 				}else {
+					Media checkSoundMedia = new Media(new File(checkSound).toURI().toString());
+					MediaPlayer checkMovePlayer = new MediaPlayer(checkSoundMedia);
+					checkMovePlayer.play();
 					statusBar.whitePlayerAlert.setText("White player is in check!");
 				}
 			}
@@ -372,6 +390,9 @@ public class ChessBoard extends Pane{
 		
 		if(!this.checkMate && !this.stalemate && !this.timer.timeOver) {
 			if(tiles[xIndex][yIndex].checkHighlight()) {
+				Media chessMoveMedia = new Media(new File(chessMoveSound).toURI().toString());
+				MediaPlayer chessMovePlayer = new MediaPlayer(chessMoveMedia);
+				chessMovePlayer.play();
 				movePiece(x, y);
 				unhighlightWindow();
 				selectedPiece = null;
