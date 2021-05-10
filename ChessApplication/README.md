@@ -22,7 +22,8 @@ This application requires a Java IDE(NetBeans, Eclipse for Enterprise Java, Inte
 * Finally, right click on the project, hover over 'Run As' and select 'Run Configurations' 
 * Here, go to the 'Arguments' tab and in the 'VM arguments' text field paste in the follow command:
 ```
---module-path "C:\Users\sheha\OneDrive\Documents\GitHub\javafx-sdk-11.0.2\lib" --add-modules javafx.controls,javafx.fxml,javafx.media
+--module-path "C:\Users\sheha\OneDrive\Documents\GitHub\javafx-sdk-11.0.2\lib" 
+--add-modules javafx.controls,javafx.fxml,javafx.media
 ```
 * Now give your run configuration a unique name and make sure to select that configuration whenever you want to run the program in the future 
 * Finally, click 'Run' and select 'Main' in the prompt that follows 
