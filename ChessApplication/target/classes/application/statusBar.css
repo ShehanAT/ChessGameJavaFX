@@ -1,0 +1,4 @@
+#statusBar{
+	-fx-background-color: brown;
+	-fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.4), 75, 0.24, 2, 13);
+}
