@@ -29,13 +29,17 @@ This application requires a Java IDE(NetBeans, Eclipse for Enterprise Java, Inte
 * Finally, click 'Run' and select 'Main' in the prompt that follows 
 
 ### Screenshots:
-![Welcome screen](https://github.com/ShehanAT/ChessGameJavaFX/blob/master/static/screenshots/screenshot_1.png)
+Welcome screen:  
+![Welcome screen](/static/images/screenshot_1.png)
 
-![Black player to move](https://github.com/ShehanAT/ChessGameJavaFX/blob/master/static/screenshots/screenshot_2.png)
+Black player to move:  
+![Black player to move](/static/images/screenshot_2.png)
 
-![White player wins!](https://github.com/ShehanAT/ChessGameJavaFX/blob/master/static/screenshots/screenshot_3.png)
+White player wins:  
+![White player wins!](/static/images/screenshot_3.png)
 
-![Black knight is pinned](https://github.com/ShehanAT/ChessGameJavaFX/blob/master/static/screenshots/screenshot_4.png)
+Black knight is pinned:  
+![Black knight is pinned](/static/images/screenshot_4.png)
 
 ### Contributing:
 Please feel free to contribute to this project however possible by forking this repo, making changes and initiating pull requests. Thanks!
