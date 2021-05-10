@@ -28,16 +28,16 @@ This application requires a Java IDE(NetBeans, Eclipse for Enterprise Java, Inte
 * Finally, click 'Run' and select 'Main' in the prompt that follows 
 
 ### Screenshots:
-Welcome screen:
+Welcome screen:  
 ![Welcome screen](/ChessApplication/static/images/screenshot_1.png)
 
-Black player to move:
+Black player to move:  
 ![Black player to move](/ChessApplication/static/images/screenshot_2.png)
 
-White player wins:
+White player wins:  
 ![White player wins!](/ChessApplication/static/images/screenshot_3.png)
 
-Black knight is pinned:
+Black knight is pinned:  
 ![Black knight is pinned](/ChessApplication/static/images/screenshot_4.png)
 
 ### Contributing:
